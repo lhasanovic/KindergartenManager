@@ -1,29 +1,25 @@
 package ba.unsa.etf.rpr;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Child {
 	private String firstName;
 	private String lastName;
 	private String parentName;
 	private LocalDate dateOfBirth;
-	private boolean hasSpecialNeeds;
 
-	public Child(String firstName, String lastName, String parentName, LocalDate dateOfBirth, boolean hasSpecialNeeds) {
+	public Child(String firstName, String lastName, String parentName, LocalDate dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.parentName = parentName;
 		this.dateOfBirth = dateOfBirth;
-		this.hasSpecialNeeds = hasSpecialNeeds;
 	}
 
-	public Child(String firstName, String lastName, String parentName, int day, int month, int year, boolean hasSpecialNeeds) throws InvalidChildBirthDateException {
+	public Child(String firstName, String lastName, String parentName, int day, int month, int year) throws InvalidChildBirthDateException {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.parentName = parentName;
 		setDateOfBirth(year, month, day);
-		this.hasSpecialNeeds = hasSpecialNeeds;
 	}
 
 	public String getFirstName() {
@@ -74,13 +70,5 @@ public class Child {
 			throw new InvalidChildBirthDateException("Child is younger than 2 years!");
 
 		this.dateOfBirth = LocalDate.of(year, month, day);
-	}
-
-	public boolean hasSpecialNeeds() {
-		return hasSpecialNeeds;
-	}
-
-	public void setHasSpecialNeeds(boolean hasSpecialNeeds) {
-		this.hasSpecialNeeds = hasSpecialNeeds;
 	}
 }
