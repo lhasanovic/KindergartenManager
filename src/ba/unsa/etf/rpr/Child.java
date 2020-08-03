@@ -8,21 +8,24 @@ public class Child {
 	private String lastName;
 	private LocalDate dateOfBirth;
 	private Parent parent;
+	private KindergartenTeacher teacher;
 
-	public Child(int id, String firstName, String lastName, LocalDate dateOfBirth, String parentName, String phoneNumber) {
+	public Child(int id, String firstName, String lastName, LocalDate dateOfBirth, String parentName, String phoneNumber, KindergartenTeacher teacher) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
 		this.parent = new Parent(parentName, lastName, phoneNumber);
+		this.teacher = teacher;
 	}
 
-	public Child(int id, String firstName, String lastName, int day, int month, int year, String parentName, String phoneNumber) throws InvalidChildBirthDateException {
+	public Child(int id, String firstName, String lastName, int day, int month, int year, String parentName, String phoneNumber, KindergartenTeacher teacher) throws InvalidChildBirthDateException {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setDateOfBirth(year, month, day);
 		this.parent = new Parent(parentName, lastName, phoneNumber);
+		this.teacher = teacher;
 	}
 
 	public Child() {}
