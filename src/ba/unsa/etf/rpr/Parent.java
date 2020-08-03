@@ -3,6 +3,35 @@ package ba.unsa.etf.rpr;
 public class Parent {
 	private String firstName;
 	private String lastName;
-	public String phoneNumber;
-	Child child;
+	private String phoneNumber;
+
+	public Parent(String firstName, String lastName, String phoneNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 }

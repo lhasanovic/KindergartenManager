@@ -5,21 +5,21 @@ import java.time.LocalDate;
 public class Child {
 	private String firstName;
 	private String lastName;
-	private String parentName;
 	private LocalDate dateOfBirth;
+	private Parent parent;
 
-	public Child(String firstName, String lastName, String parentName, LocalDate dateOfBirth) {
+	public Child(String firstName, String lastName, String parentName, LocalDate dateOfBirth, String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.parentName = parentName;
 		this.dateOfBirth = dateOfBirth;
+		this.parent = new Parent(parentName, lastName, phoneNumber);
 	}
 
-	public Child(String firstName, String lastName, String parentName, int day, int month, int year) throws InvalidChildBirthDateException {
+	public Child(String firstName, String lastName, String parentName, int day, int month, int year, String phoneNumber) throws InvalidChildBirthDateException {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.parentName = parentName;
 		setDateOfBirth(year, month, day);
+		this.parent = new Parent(parentName, lastName, phoneNumber);
 	}
 
 	public String getFirstName() {
@@ -38,20 +38,20 @@ public class Child {
 		this.lastName = lastName;
 	}
 
-	public String getParentName() {
-		return parentName;
-	}
-
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
-	}
-
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Parent getParent() {
+		return parent;
+	}
+
+	public void setParent(Parent parent) {
+		this.parent = parent;
 	}
 
 	public void setDateOfBirth(int year, int month, int day) throws InvalidChildBirthDateException {
