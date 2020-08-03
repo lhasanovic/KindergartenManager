@@ -46,6 +46,45 @@ public class KindergartenDAO {
 		}
 	}
 
+	public Child getChild(int id) {
+		try {
+			getChildStatement.setInt(1, id);
+			ResultSet rs = getChildStatement.executeQuery();
+			if (!rs.next()) return null;
+			return getChildFromResultSet(rs);
+		} catch (SQLException | InvalidChildBirthDateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
+		String dateOfBirth = rs.getString(4);
+		String[] dateParts = dateOfBirth.split("\\.");
+		int day = Integer.parseInt(dateParts[0]);
+		int month = Integer.parseInt(dateParts[1]);
+		int year = Integer.parseInt(dateParts[2]);
+
+		if(rs.getString(7).equals("None"))
+			return new Child(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6));
+		else
+			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), rs.getString(7));
+	}
+
+	public static void removeInstance() {
+		if (instance == null) return;
+		instance.close();
+		instance = null;
+	}
+
+	public void close() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void regenerateBase() {
 		Scanner input = null;
 		try {

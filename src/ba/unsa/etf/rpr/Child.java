@@ -9,7 +9,7 @@ public class Child {
 	private LocalDate dateOfBirth;
 	private Parent parent;
 
-	public Child(int id, String firstName, String lastName, String parentName, LocalDate dateOfBirth, String phoneNumber) {
+	public Child(int id, String firstName, String lastName, LocalDate dateOfBirth, String parentName, String phoneNumber) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -17,7 +17,7 @@ public class Child {
 		this.parent = new Parent(parentName, lastName, phoneNumber);
 	}
 
-	public Child(int id, String firstName, String lastName, String parentName, int day, int month, int year, String phoneNumber) throws InvalidChildBirthDateException {
+	public Child(int id, String firstName, String lastName, int day, int month, int year, String parentName, String phoneNumber) throws InvalidChildBirthDateException {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
