@@ -3,23 +3,34 @@ package ba.unsa.etf.rpr;
 import java.time.LocalDate;
 
 public class Child {
+	private int id;
 	private String firstName;
 	private String lastName;
 	private LocalDate dateOfBirth;
 	private Parent parent;
 
-	public Child(String firstName, String lastName, String parentName, LocalDate dateOfBirth, String phoneNumber) {
+	public Child(int id, String firstName, String lastName, String parentName, LocalDate dateOfBirth, String phoneNumber) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
 		this.parent = new Parent(parentName, lastName, phoneNumber);
 	}
 
-	public Child(String firstName, String lastName, String parentName, int day, int month, int year, String phoneNumber) throws InvalidChildBirthDateException {
+	public Child(int id, String firstName, String lastName, String parentName, int day, int month, int year, String phoneNumber) throws InvalidChildBirthDateException {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setDateOfBirth(year, month, day);
 		this.parent = new Parent(parentName, lastName, phoneNumber);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -65,10 +76,15 @@ public class Child {
 		LocalDate tempDate = LocalDate.of(year, month, day);
 
 		if(tempDate.plusYears(5).isBefore(LocalDate.now()))
-			throw new InvalidChildBirthDateException("Child is older than 4 years!");
+			throw new InvalidChildBirthDateException("Child is older than 5 years!");
 		if(tempDate.plusYears(2).isAfter(LocalDate.now()))
 			throw new InvalidChildBirthDateException("Child is younger than 2 years!");
 
 		this.dateOfBirth = LocalDate.of(year, month, day);
+	}
+
+	@Override
+	public String toString() {
+		return firstName + " (" + parent.getFirstName() + ") " + lastName;
 	}
 }
