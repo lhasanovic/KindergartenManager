@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class KindergartenDAO {
@@ -73,13 +74,10 @@ public class KindergartenDAO {
 
 	public void insertChild(Child child) {
 		try {
-			ResultSet rs = getNextChildIdStatement.executeQuery();
-			int id = 1;
-			if (rs.next()) {
-				id = rs.getInt(1);
-			}
+			int id = getNextChildId();
+
 			String dateOfBirth = child.getDateOfBirth().getDayOfMonth() + "." + child.getDateOfBirth().getMonthValue() + "." + child.getDateOfBirth().getYear();
-			insertChildStatement.setInt(1, child.getId());
+			insertChildStatement.setInt(1, id);
 			insertChildStatement.setString(2, child.getFirstName());
 			insertChildStatement.setString(3, child.getLastName());
 			insertChildStatement.setString(4, dateOfBirth);
@@ -127,6 +125,20 @@ public class KindergartenDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<Child> getChildren() {
+		ArrayList<Child> children = new ArrayList();
+		try {
+			ResultSet rs = getChildrenStatement.executeQuery();
+			while (rs.next()) {
+				Child child = getChildFromResultSet(rs);
+				children.add(child);
+			}
+		} catch (SQLException | InvalidChildBirthDateException e) {
+			e.printStackTrace();
+		}
+		return children;
 	}
 
 	public int getNextChildId() {
