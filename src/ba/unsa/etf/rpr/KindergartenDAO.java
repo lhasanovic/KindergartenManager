@@ -11,6 +11,7 @@ public class KindergartenDAO {
 	private Connection conn;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
+	private PreparedStatement getTeacherStatement;
 
 	public static KindergartenDAO getInstance() {
 		if (instance == null) instance = new KindergartenDAO();
@@ -25,11 +26,11 @@ public class KindergartenDAO {
 		}
 
 		try {
-			insertChildStatement = conn.prepareStatement("INSERT INTO children VALUES (?,?,?,?,?,?,?)");
+			insertChildStatement = conn.prepareStatement("INSERT INTO children VALUES (?,?,?,?,?,?,?,?)");
 		} catch (SQLException e) {
 			regenerateBase();
 			try {
-				insertChildStatement = conn.prepareStatement("INSERT INTO children VALUES (?,?,?,?,?,?,?)");
+				insertChildStatement = conn.prepareStatement("INSERT INTO children VALUES (?,?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -39,9 +40,11 @@ public class KindergartenDAO {
 			getChildStatement = conn.prepareStatement("SELECT * FROM children WHERE id=?");
 			findChildStatement = conn.prepareStatement("SELECT * FROM children WHERE first_name=? AND last_name=?");
 			deleteChildStatement = conn.prepareStatement("DELETE FROM children WHERE id=?");
-			editChildStatement = conn.prepareStatement("UPDATE children SET first_name=?, last_name=?, birth_date=?, parent_name=?, phone_number=?, special_need=? WHERE id=?");
+			editChildStatement = conn.prepareStatement("UPDATE children SET first_name=?, last_name=?, birth_date=?, parent_name=?, phone_number=?, special_need=?, teacher=? WHERE id=?");
 			getChildrenStatement = conn.prepareStatement("SELECT * FROM children ORDER BY last_name");
 			getNextChildIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM children");
+
+			getTeacherStatement = conn.prepareStatement("SELECT * FROM teacher WHERE id=?");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -155,6 +158,18 @@ public class KindergartenDAO {
 		}
 	}
 
+	public KindergartenTeacher getTeacher(int id) {
+		try {
+			getTeacherStatement.setInt(1, id);
+			ResultSet rs = getTeacherStatement.executeQuery();
+			if (!rs.next()) return null;
+			return getTeacherFromResultSet(rs);
+		} catch (SQLException | InvalidChildBirthDateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
 		String dateOfBirth = rs.getString(4);
 		String[] dateParts = dateOfBirth.split("\\.");
@@ -163,9 +178,16 @@ public class KindergartenDAO {
 		int year = Integer.parseInt(dateParts[2]);
 
 		if(rs.getString(7).equals("None"))
-			return new Child(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6));
+			return new Child(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(7)));
 		else
-			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), rs.getString(7));
+			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(7)), rs.getString(8));
+	}
+
+	private KindergartenTeacher getTeacherFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
+		if(rs.getString(5).equals("Yes"))
+			return new KindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+		else
+			return new SpecialNeedsKindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
 	}
 
 	public static void removeInstance() {
