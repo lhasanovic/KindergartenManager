@@ -25,6 +25,8 @@ public class Child {
 		this.parent = new Parent(parentName, lastName, phoneNumber);
 	}
 
+	public Child() {}
+
 	public int getId() {
 		return id;
 	}

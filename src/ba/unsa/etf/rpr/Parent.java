@@ -11,6 +11,8 @@ public class Parent {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public Parent() {}
+
 	public String getFirstName() {
 		return firstName;
 	}

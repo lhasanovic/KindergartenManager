@@ -58,6 +58,91 @@ public class KindergartenDAO {
 		}
 	}
 
+	public Child findChild(String firstName, String lastName) {
+		try {
+			findChildStatement.setString(1, firstName);
+			findChildStatement.setString(2, lastName);
+			ResultSet rs = findChildStatement.executeQuery();
+			if(!rs.next()) return null;
+			return getChildFromResultSet(rs);
+		} catch (SQLException | InvalidChildBirthDateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public void insertChild(Child child) {
+		try {
+			ResultSet rs = getNextChildIdStatement.executeQuery();
+			int id = 1;
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			String dateOfBirth = child.getDateOfBirth().getDayOfMonth() + "." + child.getDateOfBirth().getMonthValue() + "." + child.getDateOfBirth().getYear();
+			insertChildStatement.setInt(1, child.getId());
+			insertChildStatement.setString(2, child.getFirstName());
+			insertChildStatement.setString(3, child.getLastName());
+			insertChildStatement.setString(4, dateOfBirth);
+			insertChildStatement.setString(5, child.getParent().getFirstName());
+			insertChildStatement.setString(6, child.getParent().getPhoneNumber());
+
+			if(child instanceof SpecialNeedsChild)
+				insertChildStatement.setString(7, ((SpecialNeedsChild) child).getSpecialNeedDescription());
+			else
+				insertChildStatement.setString(7, "None");
+
+			insertChildStatement.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteChild(Child child) {
+		try {
+			deleteChildStatement.setInt(1, child.getId());
+			deleteChildStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editChild(Child child) {
+		try {
+			String dateOfBirth = child.getDateOfBirth().getDayOfMonth() + "." + child.getDateOfBirth().getMonthValue() + "." + child.getDateOfBirth().getYear();
+
+			editChildStatement.setString(1, child.getFirstName());
+			editChildStatement.setString(2, child.getLastName());
+			editChildStatement.setString(3, dateOfBirth);
+			editChildStatement.setString(4, child.getParent().getFirstName());
+			editChildStatement.setString(5, child.getParent().getPhoneNumber());
+
+			if(child instanceof SpecialNeedsChild)
+				editChildStatement.setString(6, ((SpecialNeedsChild) child).getSpecialNeedDescription());
+			else
+				editChildStatement.setString(6, "None");
+
+			editChildStatement.setInt(7, child.getId());
+
+			editChildStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getNextChildId() {
+		try {
+			ResultSet rs = getNextChildIdStatement.executeQuery();
+			int id = 1;
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			return id;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
 		String dateOfBirth = rs.getString(4);
 		String[] dateParts = dateOfBirth.split("\\.");
