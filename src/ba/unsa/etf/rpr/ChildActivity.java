@@ -7,5 +7,6 @@ public enum ChildActivity {
 	EATING,
 	CRYING,
 	PROBLEM,
-	READY_TO_PICKUP
+	READY_TO_PICKUP,
+	NOT_PRESENT
 }
