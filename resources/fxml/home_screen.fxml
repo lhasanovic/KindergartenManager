@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="welcomeLabel" text="Welcome to Kindergarten App" />
+      <Button fx:id="teacherBtn" mnemonicParsing="false" onAction="#actionTeacherBtn" text="Teacher" GridPane.rowIndex="1" />
+      <Button fx:id="parentBtn" mnemonicParsing="false" onAction="#actionParentBtn" text="Parent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <PasswordField fx:id="idField" GridPane.rowIndex="2" />
+      <Label fx:id="enterIdLabel" text=" " GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+      <Label fx:id="teacherOrParentLabel" text="Are you a teacher or a parent?" GridPane.columnIndex="1" />
+      <Button fx:id="confirmBtn" onAction="#actionConfirmBtn" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+   </children>
+</GridPane>
