@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
@@ -15,7 +15,8 @@ public class HomeScreenController {
 	public Button teacherBtn;
 	public Button parentBtn;
 	public Label enterIdLabel;
-	public PasswordField idField;
+	public TextField idField;
+	public TextField nameField;
 	public Button confirmBtn;
 
 	private KindergartenDAO dao;
@@ -27,12 +28,14 @@ public class HomeScreenController {
 	@FXML
 	public void initialize() {
 		idField.setVisible(false);
+		nameField.setVisible(false);
 		confirmBtn.setVisible(false);
 	}
 
 	public void actionTeacherBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
+		nameField.setVisible(true);
 		confirmBtn.setVisible(true);
 
 		teacherBtn.setDisable(true);
@@ -44,6 +47,7 @@ public class HomeScreenController {
 	public void actionParentBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
+		nameField.setVisible(true);
 		confirmBtn.setVisible(true);
 
 		parentBtn.setDisable(true);
@@ -54,25 +58,35 @@ public class HomeScreenController {
 
 	public void actionConfirmBtn(ActionEvent actionEvent) {
 		try {
-			int id = Integer.parseInt(idField.getText());
-
-			if(idField.getText().length() != 8)
-				throw new NumberFormatException();
-
 			if(teacherBtn.isDisable()) {
+				String name = nameField.getText();
+				if(name == null || name.isEmpty())
+					throw new InvalidTeacherDataException("Name");
+
+				int id = Integer.parseInt(idField.getText());
+				if(idField.getText().length() != 5)
+					throw new NumberFormatException();
+
 				KindergartenTeacher teacher = dao.getTeacher(id);
-				if(teacher == null)
-					throw new InvalidTeacherIdException();
+				if(teacher == null || !teacher.getFirstName().equals(name))
+					throw new InvalidTeacherDataException("ID");
 
 				startAppAsTeacher(teacher);
 			} else if(parentBtn.isDisable()) {
+				String name = nameField.getText();
+				if(name == null || name.isEmpty())
+					throw new InvalidChildDataException("Name");
+
+				int id = Integer.parseInt(idField.getText());
+				if(idField.getText().length() != 5)
+					throw new NumberFormatException();
+
 				Child child = dao.getChild(id);
-				if(child == null)
-					throw new InvalidChildIdException();
+				if(child == null || !child.getParent().getFirstName().equals(name))
+					throw new InvalidChildDataException("ID");
 
 				startAppAsParent(child);
 			}
-
 		} catch (NumberFormatException e) {
 			Notifications notificationBuilder = Notifications.create()
 					.title("Please enter a valid ID!")
@@ -80,17 +94,33 @@ public class HomeScreenController {
 					.hideAfter(Duration.seconds(3))
 					.position(Pos.BOTTOM_RIGHT);
 			notificationBuilder.showError();
-		} catch (InvalidTeacherIdException e1) {
+		} catch (InvalidTeacherDataException e1) {
+			String title = "";
+			String text = "";
+			if(e1.getMessage().equals("Name")) {
+				title = "Please enter your first name!";
+			} else if(e1.getMessage().equals("ID")) {
+				title = "This ID/name combination isn't registered!";
+				text = "Check for possible mistakes";
+			}
 			Notifications notificationBuilder = Notifications.create()
-					.title("This teacher ID isn't registered!")
-					.text("Check for possible mistakes")
+					.title(title)
+					.text(text)
 					.hideAfter(Duration.seconds(3))
 					.position(Pos.BOTTOM_RIGHT);
 			notificationBuilder.showError();
-		} catch (InvalidChildIdException e2) {
+		} catch (InvalidChildDataException e2) {
+			String title = "";
+			String text = "";
+			if(e2.getMessage().equals("Name")) {
+				title = "Please enter YOUR first name!";
+			} else if(e2.getMessage().equals("ID")) {
+				title = "This ID/parent name combination isn't registered!";
+				text = "Check for possible mistakes";
+			}
 			Notifications notificationBuilder = Notifications.create()
-					.title("This child ID isn't registered!")
-					.text("Check for possible mistakes")
+					.title(title)
+					.text(text)
 					.hideAfter(Duration.seconds(3))
 					.position(Pos.BOTTOM_RIGHT);
 			notificationBuilder.showError();
@@ -98,8 +128,10 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsTeacher(KindergartenTeacher teacher) {
+		System.exit(0);
 	}
 
 	private void startAppAsParent(Child child) {
+		System.exit(0);
 	}
 }
