@@ -11,7 +11,7 @@ public class KindergartenDAO {
 	private Connection conn;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
-	private PreparedStatement getTeacherStatement;
+	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
 
 	public static KindergartenDAO getInstance() {
 		if (instance == null) instance = new KindergartenDAO();
@@ -38,13 +38,14 @@ public class KindergartenDAO {
 
 		try {
 			getChildStatement = conn.prepareStatement("SELECT * FROM children WHERE id=?");
-			findChildStatement = conn.prepareStatement("SELECT * FROM children WHERE first_name=? AND last_name=?");
+			findChildStatement = conn.prepareStatement("SELECT * FROM children WHERE first_name=? AND last_name=? AND parent_name=?");
 			deleteChildStatement = conn.prepareStatement("DELETE FROM children WHERE id=?");
 			editChildStatement = conn.prepareStatement("UPDATE children SET first_name=?, last_name=?, birth_date=?, parent_name=?, phone_number=?, special_need=?, teacher=? WHERE id=?");
 			getChildrenStatement = conn.prepareStatement("SELECT * FROM children ORDER BY last_name");
 			getNextChildIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM children");
 
 			getTeacherStatement = conn.prepareStatement("SELECT * FROM teacher WHERE id=?");
+			findTeacherStatement = conn.prepareStatement("");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,10 +63,11 @@ public class KindergartenDAO {
 		}
 	}
 
-	public Child findChild(String firstName, String lastName) {
+	public Child findChild(Child child) {
 		try {
-			findChildStatement.setString(1, firstName);
-			findChildStatement.setString(2, lastName);
+			findChildStatement.setString(1, child.getFirstName());
+			findChildStatement.setString(2, child.getLastName());
+			findChildStatement.setString(3, child.getParent().getFirstName());
 			ResultSet rs = findChildStatement.executeQuery();
 			if(!rs.next()) return null;
 			return getChildFromResultSet(rs);
