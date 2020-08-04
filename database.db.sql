@@ -1,4 +1,4 @@
-CREATE TABLE "teacher" IF NOT EXISTS (
+CREATE TABLE "teachers" IF NOT EXISTS (
     "id"	INTEGER NOT NULL UNIQUE,
     "first_name"	TEXT,
     "last_name"	TEXT,
@@ -7,7 +7,7 @@ CREATE TABLE "teacher" IF NOT EXISTS (
     PRIMARY KEY("id")
 );
 
-INSERT INTO "teacher" VALUES (1, 'Adnan', 'Adnanovic', '+38761889825', 'Yes');
+INSERT INTO "teachers" VALUES (1, 'Adnan', 'Adnanovic', '+38761889825', 'Yes');
 
 CREATE TABLE "children" IF NOT EXISTS (
     "id"	INTEGER NOT NULL UNIQUE,
@@ -19,7 +19,7 @@ CREATE TABLE "children" IF NOT EXISTS (
     "special_need"	TEXT,
     "teacher"	INTEGER,
     PRIMARY KEY("id"),
-    FOREIGN KEY("teacher") REFERENCES "teacher"("id")
+    FOREIGN KEY("teacher") REFERENCES "teachers"("id")
 );
 
 INSERT INTO "children" VALUES (1, 'Niko', 'Nikić', '01.01. 2017', 'Ivan', '+38761123456', 'None', 1);

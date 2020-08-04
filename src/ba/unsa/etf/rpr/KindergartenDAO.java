@@ -44,8 +44,12 @@ public class KindergartenDAO {
 			getChildrenStatement = conn.prepareStatement("SELECT * FROM children ORDER BY last_name");
 			getNextChildIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM children");
 
-			getTeacherStatement = conn.prepareStatement("SELECT * FROM teacher WHERE id=?");
-			findTeacherStatement = conn.prepareStatement("");
+			getTeacherStatement = conn.prepareStatement("SELECT * FROM teachers WHERE id=?");
+			findTeacherStatement = conn.prepareStatement("SELECT * FROM teachers WHERE first_name=? AND last_name=? AND phone_number=?");
+			deleteTeacherStatement = conn.prepareStatement("DELETE FROM teachers WHERE id=?");
+			editTeacherStatement = conn.prepareStatement("UPDATE teachers SET first_name=?, last_name=?, phone_number=?, special_needs=? WHERE id=?");
+			getTeachersStatement = conn.prepareStatement("SELECT * FROM teachers ORDER BY last_name");
+			getNextTeacherIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM teachers");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -133,7 +137,7 @@ public class KindergartenDAO {
 	}
 
 	public ArrayList<Child> getChildren() {
-		ArrayList<Child> children = new ArrayList();
+		ArrayList<Child> children = new ArrayList<>();
 		try {
 			ResultSet rs = getChildrenStatement.executeQuery();
 			while (rs.next()) {
@@ -166,9 +170,101 @@ public class KindergartenDAO {
 			ResultSet rs = getTeacherStatement.executeQuery();
 			if (!rs.next()) return null;
 			return getTeacherFromResultSet(rs);
-		} catch (SQLException | InvalidChildBirthDateException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public KindergartenTeacher findTeacher(KindergartenTeacher teacher) {
+		try {
+			findTeacherStatement.setString(1, teacher.getFirstName());
+			findTeacherStatement.setString(2, teacher.getLastName());
+			findTeacherStatement.setString(3, teacher.getPhoneNumber());
+
+			ResultSet rs = findTeacherStatement.executeQuery();
+			if(!rs.next()) return null;
+
+			return getTeacherFromResultSet(rs);
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public void insertTeacher(KindergartenTeacher teacher) {
+		try {
+			int id = getNextChildId();
+
+			insertTeacherStatement.setInt(1, id);
+			insertTeacherStatement.setString(2, teacher.getFirstName());
+			insertTeacherStatement.setString(3, teacher.getLastName());
+			insertTeacherStatement.setString(4, teacher.getPhoneNumber());
+
+			if(teacher instanceof SpecialNeedsKindergartenTeacher)
+				insertTeacherStatement.setString(5, "Yes");
+			else
+				insertTeacherStatement.setString(5, "No");
+
+			insertTeacherStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteTeacher(KindergartenTeacher teacher) {
+		try {
+			deleteTeacherStatement.setInt(1, teacher.getId());
+			deleteTeacherStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editTeacher(KindergartenTeacher teacher) {
+		try {
+			editTeacherStatement.setString(1, teacher.getFirstName());
+			editTeacherStatement.setString(2, teacher.getLastName());
+			editTeacherStatement.setString(3, teacher.getPhoneNumber());
+
+			if(teacher instanceof SpecialNeedsKindergartenTeacher)
+				editTeacherStatement.setString(4, "Yes");
+			else
+				editTeacherStatement.setString(4, "No");
+
+			editTeacherStatement.setInt(5, teacher.getId());
+
+			editTeacherStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<KindergartenTeacher> getTeachers() {
+		ArrayList<KindergartenTeacher> teachers = new ArrayList<>();
+		try {
+			ResultSet rs = getTeachersStatement.executeQuery();
+			while (rs.next()) {
+				KindergartenTeacher teacher = getTeacherFromResultSet(rs);
+				teachers.add(teacher);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return teachers;
+	}
+
+	public int getNextTeacherId() {
+		try {
+			ResultSet rs = getNextTeacherIdStatement.executeQuery();
+			int id = 1;
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			return id;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
 		}
 	}
 
@@ -185,7 +281,7 @@ public class KindergartenDAO {
 			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(7)), rs.getString(8));
 	}
 
-	private KindergartenTeacher getTeacherFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
+	private KindergartenTeacher getTeacherFromResultSet(ResultSet rs) throws SQLException {
 		if(rs.getString(5).equals("Yes"))
 			return new KindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
 		else
