@@ -35,7 +35,9 @@ public class HomeScreenController {
 	public void actionTeacherBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
+		idField.setPromptText("Enter your teacher ID");
 		nameField.setVisible(true);
+		nameField.setPromptText("Enter your first name");
 		confirmBtn.setVisible(true);
 
 		teacherBtn.setDisable(true);
@@ -47,7 +49,9 @@ public class HomeScreenController {
 	public void actionParentBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
+		idField.setPromptText("Enter your child's ID");
 		nameField.setVisible(true);
+		nameField.setPromptText("Enter your first name");
 		confirmBtn.setVisible(true);
 
 		parentBtn.setDisable(true);
@@ -88,12 +92,9 @@ public class HomeScreenController {
 				startAppAsParent(child);
 			}
 		} catch (NumberFormatException e) {
-			Notifications notificationBuilder = Notifications.create()
-					.title("Please enter a valid ID!")
-					.text("ID is an 8-digit number")
-					.hideAfter(Duration.seconds(3))
-					.position(Pos.BOTTOM_RIGHT);
-			notificationBuilder.showError();
+			String title = "Please enter a valid ID!";
+			String text = "ID is an 8-digit number";
+			notify(title, text);
 		} catch (InvalidTeacherDataException e1) {
 			String title = "";
 			String text = "";
@@ -103,12 +104,7 @@ public class HomeScreenController {
 				title = "This ID/name combination isn't registered!";
 				text = "Check for possible mistakes";
 			}
-			Notifications notificationBuilder = Notifications.create()
-					.title(title)
-					.text(text)
-					.hideAfter(Duration.seconds(3))
-					.position(Pos.BOTTOM_RIGHT);
-			notificationBuilder.showError();
+			notify(title, text);
 		} catch (InvalidChildDataException e2) {
 			String title = "";
 			String text = "";
@@ -118,13 +114,17 @@ public class HomeScreenController {
 				title = "This ID/parent name combination isn't registered!";
 				text = "Check for possible mistakes";
 			}
-			Notifications notificationBuilder = Notifications.create()
-					.title(title)
-					.text(text)
-					.hideAfter(Duration.seconds(3))
-					.position(Pos.BOTTOM_RIGHT);
-			notificationBuilder.showError();
+			notify(title, text);
 		}
+	}
+
+	private void notify(String title, String text) {
+		Notifications notificationBuilder = Notifications.create()
+				.title(title)
+				.text(text)
+				.hideAfter(Duration.seconds(2))
+				.position(Pos.BOTTOM_RIGHT);
+		notificationBuilder.showError();
 	}
 
 	private void startAppAsTeacher(KindergartenTeacher teacher) {
