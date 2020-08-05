@@ -12,6 +12,7 @@ public class KindergartenDAO {
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
+	private PreparedStatement getTeacherClassStatement;
 
 	public static KindergartenDAO getInstance() {
 		if (instance == null) instance = new KindergartenDAO();
@@ -44,12 +45,15 @@ public class KindergartenDAO {
 			getChildrenStatement = conn.prepareStatement("SELECT * FROM children ORDER BY last_name");
 			getNextChildIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM children");
 
+			insertTeacherStatement = conn.prepareStatement("INSERT INTO teachers VALUES (?,?,?,?,?)");
 			getTeacherStatement = conn.prepareStatement("SELECT * FROM teachers WHERE id=?");
 			findTeacherStatement = conn.prepareStatement("SELECT * FROM teachers WHERE first_name=? AND last_name=? AND phone_number=?");
 			deleteTeacherStatement = conn.prepareStatement("DELETE FROM teachers WHERE id=?");
 			editTeacherStatement = conn.prepareStatement("UPDATE teachers SET first_name=?, last_name=?, phone_number=?, special_needs=? WHERE id=?");
 			getTeachersStatement = conn.prepareStatement("SELECT * FROM teachers ORDER BY last_name");
 			getNextTeacherIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM teachers");
+
+			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=? ORDER BY last_name");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -266,6 +270,20 @@ public class KindergartenDAO {
 			e.printStackTrace();
 			return -1;
 		}
+	}
+
+	public ArrayList<Child> getTeacherClass() {
+		ArrayList<Child> teacherClass = new ArrayList<>();
+		try {
+			ResultSet rs = getTeacherClassStatement.executeQuery();
+			while (rs.next()) {
+				Child child = getChildFromResultSet(rs);
+				teacherClass.add(child);
+			}
+		} catch (SQLException | InvalidChildBirthDateException e) {
+			e.printStackTrace();
+		}
+		return teacherClass;
 	}
 
 	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
