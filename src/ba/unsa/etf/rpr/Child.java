@@ -9,6 +9,7 @@ public class Child {
 	private LocalDate dateOfBirth;
 	private Parent parent;
 	private KindergartenTeacher teacher;
+	private ChildActivity activity = ChildActivity.NOT_PRESENT;
 
 	public Child(int id, String firstName, String lastName, LocalDate dateOfBirth, String parentName, String phoneNumber, KindergartenTeacher teacher) {
 		this.id = id;
@@ -86,6 +87,22 @@ public class Child {
 			throw new InvalidChildBirthDateException("Child is younger than 2 years!");
 
 		this.dateOfBirth = LocalDate.of(year, month, day);
+	}
+
+	public KindergartenTeacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(KindergartenTeacher teacher) {
+		this.teacher = teacher;
+	}
+
+	public ChildActivity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(ChildActivity activity) {
+		this.activity = activity;
 	}
 
 	@Override
