@@ -272,9 +272,14 @@ public class KindergartenDAO {
 		}
 	}
 
-	public ArrayList<Child> getTeacherClass() {
+	public ArrayList<Child> getTeacherClass(int teacherID) throws InvalidTeacherDataException {
+		KindergartenTeacher teacher = getTeacher(teacherID);
+		if(teacher == null)
+			throw new InvalidTeacherDataException("Teacher with this ID not found!");
+
 		ArrayList<Child> teacherClass = new ArrayList<>();
 		try {
+			getTeacherClassStatement.setInt(1, teacherID);
 			ResultSet rs = getTeacherClassStatement.executeQuery();
 			while (rs.next()) {
 				Child child = getChildFromResultSet(rs);

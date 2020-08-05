@@ -2,12 +2,20 @@ package ba.unsa.etf.rpr;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+
+import java.io.IOException;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class HomeScreenController {
 	public Label welcomeLabel;
@@ -30,6 +38,7 @@ public class HomeScreenController {
 		idField.setVisible(false);
 		nameField.setVisible(false);
 		confirmBtn.setVisible(false);
+		enterIdLabel.setVisible(false);
 	}
 
 	public void actionTeacherBtn(ActionEvent actionEvent) {
@@ -43,7 +52,8 @@ public class HomeScreenController {
 		teacherBtn.setDisable(true);
 		parentBtn.setDisable(false);
 
-		enterIdLabel.setText("Enter your personal teacher ID: ");
+		enterIdLabel.setVisible(true);
+		confirmBtn.setDefaultButton(true);
 	}
 
 	public void actionParentBtn(ActionEvent actionEvent) {
@@ -57,7 +67,8 @@ public class HomeScreenController {
 		parentBtn.setDisable(true);
 		teacherBtn.setDisable(false);
 
-		enterIdLabel.setText("Enter your child's personal ID: ");
+		enterIdLabel.setVisible(true);
+		confirmBtn.setDefaultButton(true);
 	}
 
 	public void actionConfirmBtn(ActionEvent actionEvent) {
@@ -93,7 +104,7 @@ public class HomeScreenController {
 			}
 		} catch (NumberFormatException e) {
 			String title = "Please enter a valid ID!";
-			String text = "ID is an 8-digit number";
+			String text = "ID is a 5-digit number";
 			notify(title, text);
 		} catch (InvalidTeacherDataException e1) {
 			String title = "";
@@ -128,7 +139,19 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsTeacher(KindergartenTeacher teacher) {
-		System.exit(0);
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teacher.fxml"));
+			TeacherController teacherController = new TeacherController(dao.getTeacherClass(teacher.getId()));
+			loader.setController(teacherController);
+			root = loader.load();
+			stage.setTitle("Teacher Dashboard");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.show();
+		} catch (IOException | InvalidTeacherDataException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void startAppAsParent(Child child) {

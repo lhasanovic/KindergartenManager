@@ -32,7 +32,13 @@
          <GridPane.margin>
             <Insets bottom="40.0" left="200.0" right="200.0" />
          </GridPane.margin></TextField>
-      <Label fx:id="enterIdLabel" text=" " GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+      <Label fx:id="enterIdLabel" text="Enter your login data:" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin></Label>
       <Label fx:id="teacherOrParentLabel" text="Are you a teacher or a parent?" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
             <Font size="19.0" />
