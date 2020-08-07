@@ -9,7 +9,7 @@ public class Child {
 	private LocalDate dateOfBirth;
 	private Parent parent;
 	private KindergartenTeacher teacher;
-	private ChildActivity activity = ChildActivity.NOT_PRESENT;
+	private ChildActivity activity = ChildActivity.Not_present;
 
 	public Child(int id, String firstName, String lastName, LocalDate dateOfBirth, String parentName, String phoneNumber, KindergartenTeacher teacher) {
 		this.id = id;

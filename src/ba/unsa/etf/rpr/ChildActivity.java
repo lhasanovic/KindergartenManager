@@ -11,14 +11,19 @@ public enum ChildActivity {
 	},
 	Eating,
 	Crying,
-	Problem,
+	Problem {
+		@Override
+		public String toString() {
+			return "Having a problem";
+		}
+	},
 	Ready_to_pickup {
 		@Override
 		public String toString() {
 			return "Ready to pickup";
 		}
 	},
-	NOT_PRESENT {
+	Not_present {
 		@Override
 		public String toString() {
 			return "Not present";

@@ -16,7 +16,7 @@ public class PasswordDialog extends Dialog<String> {
 		setTitle("Admin Password");
 		setHeaderText("Please enter the admin password.");
 
-		ButtonType passwordButtonType = new ButtonType("Decrypt", ButtonData.OK_DONE);
+		ButtonType passwordButtonType = new ButtonType("Confirm", ButtonData.OK_DONE);
 		getDialogPane().getButtonTypes().addAll(passwordButtonType, ButtonType.CANCEL);
 
 		passwordField = new PasswordField();

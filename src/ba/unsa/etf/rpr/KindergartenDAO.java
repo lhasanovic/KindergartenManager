@@ -349,4 +349,8 @@ public class KindergartenDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
 }

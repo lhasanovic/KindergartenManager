@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -130,6 +131,16 @@ public class HomeScreenController {
 		}
 	}
 
+	public void actionAdminBtn(ActionEvent actionEvent) {
+		PasswordDialog pd = new PasswordDialog();
+		Optional<String> result = pd.showAndWait();
+		result.ifPresent(password -> {
+			if(password.equals(dao.getAdminPassword())) {
+				startAppAsAdmin();
+			}
+		});
+	}
+
 	private void notify(String title, String text) {
 		Notifications notificationBuilder = Notifications.create()
 				.title(title)
@@ -156,6 +167,22 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsParent(Child child) {
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/parent.fxml"));
+			ParentController teacherController = new ParentController(child, child.getTeacher());
+			loader.setController(teacherController);
+			root = loader.load();
+			stage.setTitle("Parent Dashboard");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void startAppAsAdmin() {
 		System.exit(0);
 	}
 }
