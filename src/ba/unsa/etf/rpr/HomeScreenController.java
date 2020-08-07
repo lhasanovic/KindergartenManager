@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -137,6 +139,8 @@ public class HomeScreenController {
 		result.ifPresent(password -> {
 			if(password.equals(dao.getAdminPassword())) {
 				startAppAsAdmin();
+			} else {
+				actionAdminBtn(new ActionEvent());
 			}
 		});
 	}
