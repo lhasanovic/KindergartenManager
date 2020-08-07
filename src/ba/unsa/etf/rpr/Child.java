@@ -59,6 +59,10 @@ public class Child {
 		return dateOfBirth;
 	}
 
+	public String getDateOfBirthString() {
+		return "" + dateOfBirth.getDayOfMonth() + "." + dateOfBirth.getMonthValue() + "." + dateOfBirth.getYear();
+	}
+
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}

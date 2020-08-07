@@ -10,6 +10,8 @@ public class KindergartenDAO {
 	private static KindergartenDAO instance;
 	private Connection conn;
 
+	private final String adminPassword = "12345678";
+
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
 	private PreparedStatement getTeacherClassStatement;
@@ -53,7 +55,7 @@ public class KindergartenDAO {
 			getTeachersStatement = conn.prepareStatement("SELECT * FROM teachers ORDER BY last_name");
 			getNextTeacherIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM teachers");
 
-			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=? ORDER BY last_name");
+			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=?");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}

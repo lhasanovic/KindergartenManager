@@ -78,11 +78,12 @@ public class HomeScreenController {
 				if(name == null || name.isEmpty())
 					throw new InvalidTeacherDataException("Name");
 
-				int id = Integer.parseInt(idField.getText());
-				if(idField.getText().length() != 5)
+				String idText = idField.getText();
+				int id = Integer.parseInt(idText);
+				if(idText.length() != 5)
 					throw new NumberFormatException();
 
-				KindergartenTeacher teacher = dao.getTeacher(id);
+				KindergartenTeacher teacher = dao.getTeacher((int)id);
 				if(teacher == null || !teacher.getFirstName().equals(name))
 					throw new InvalidTeacherDataException("ID");
 
