@@ -14,7 +14,7 @@ import org.controlsfx.control.Notifications;
 
 import java.util.ArrayList;
 
-public class RegisterChildController {
+public class RegisterEditChildController {
 	public TextField firstNameField;
 	public TextField lastNameField;
 	public TextField parentNameField;
@@ -26,7 +26,7 @@ public class RegisterChildController {
 	private Child child;
 	private ObservableList<KindergartenTeacher> teacherList;
 
-	public RegisterChildController(Child child, ArrayList<KindergartenTeacher> teachers) {
+	public RegisterEditChildController(Child child, ArrayList<KindergartenTeacher> teachers) {
 		this.child = child;
 		this.teacherList = FXCollections.observableArrayList(teachers);
 	}

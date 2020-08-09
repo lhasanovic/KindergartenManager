@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/css/stylesheet.css" />
+    </stylesheets>
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Label text="First name:" />
+        <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
+        <Label text="Last name:" GridPane.rowIndex="1" />
+        <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Phone number:" GridPane.rowIndex="2" />
+        <TextField fx:id="phoneNumberField" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="eg. 38761889825"/>
+        <Label text="Special needs:" GridPane.rowIndex="3" />
+        <RadioButton fx:id="specialNeedsYes" GridPane.rowIndex="3" GridPane.columnIndex="1" text="Yes"/>
+        <RadioButton fx:id="specialNeedsNo" GridPane.rowIndex="4" GridPane.columnIndex="1" text="No"/>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <buttons>
+                <Button fx:id="okBtn" mnemonicParsing="false" onAction="#actionOk" text="Ok" />
+                <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </children>
+    <opaqueInsets>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </opaqueInsets>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+</GridPane>

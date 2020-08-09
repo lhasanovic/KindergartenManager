@@ -49,7 +49,28 @@ public class AdminController {
 	}
 
 	public void actionHireTeacher(ActionEvent actionEvent) {
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"));
+			HireEditTeacherController hireEditTeacherController = new HireEditTeacherController(null);
+			loader.setController(hireEditTeacherController);
+			root = loader.load();
+			stage.setTitle("Hire a Teacher");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.setResizable(false);
+			stage.show();
 
+			stage.setOnHiding( event -> {
+				KindergartenTeacher teacher = hireEditTeacherController.getTeacher();
+				if (teacher != null) {
+					dao.insertTeacher(teacher);
+					teachers.setAll(dao.getTeachers());
+				}
+			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void actionFireTeacher(ActionEvent actionEvent) {
@@ -62,8 +83,8 @@ public class AdminController {
 		try {
 			String currentPassword = dao.getAdminPassword();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
-			RegisterChildController registerChildController = new RegisterChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
-			loader.setController(registerChildController);
+			RegisterEditChildController registerEditChildController = new RegisterEditChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
+			loader.setController(registerEditChildController);
 			root = loader.load();
 			stage.setTitle("Register a Child");
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -71,7 +92,7 @@ public class AdminController {
 			stage.show();
 
 			stage.setOnHiding( event -> {
-				Child child = registerChildController.getChild();
+				Child child = registerEditChildController.getChild();
 				if (child != null) {
 					dao.insertChild(child);
 					teachers.setAll(dao.getTeachers());
