@@ -105,14 +105,27 @@ public class RegisterEditChildController {
 			try {
 				new Child().setDateOfBirth(birthDatePicker.getValue());
 
-				if(child == null)
+				int oldId = -1;
+
+				if(child != null)
+					oldId = child.getId();
+
+				if(specialNeedsField.getText().isEmpty())
 					child = new Child();
+				else
+					child = new SpecialNeedsChild();
+
+				if(oldId != -1)
+					child.setId(oldId);
 
 				child.setFirstName(firstNameField.getText());
 				child.setLastName(lastNameField.getText());
 				child.setParent(new Parent(parentNameField.getText(), child.getLastName(), phoneNumberField.getText()));
 				child.setDateOfBirth(birthDatePicker.getValue());
 				child.setTeacher(teacherChoiceBox.getValue());
+
+				if(child instanceof SpecialNeedsChild)
+					((SpecialNeedsChild) child).setSpecialNeedDescription(specialNeedsField.getText());
 
 				Stage stage = (Stage) firstNameField.getScene().getWindow();
 				stage.close();

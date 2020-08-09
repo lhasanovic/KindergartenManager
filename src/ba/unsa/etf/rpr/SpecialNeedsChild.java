@@ -15,6 +15,8 @@ public class SpecialNeedsChild extends Child {
 		this.specialNeedDescription = specialNeedDescription;
 	}
 
+	public SpecialNeedsChild() {}
+
 	public String getSpecialNeedDescription() {
 		return specialNeedDescription;
 	}
