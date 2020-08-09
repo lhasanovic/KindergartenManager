@@ -18,6 +18,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints />
         <RowConstraints />
+        <RowConstraints />
     </rowConstraints>
     <children>
         <Label text="First name:" />
@@ -27,10 +28,14 @@
         <Label text="Parent name:" GridPane.rowIndex="2" />
         <TextField fx:id="parentNameField" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Date of birth:" GridPane.rowIndex="3" />
-        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <DatePicker fx:id="birthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label text="Phone number:" GridPane.rowIndex="4" />
         <TextField fx:id="phoneNumberField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+        <Label text="Teacher:" GridPane.rowIndex="5" />
+        <ChoiceBox fx:id="teacherChoiceBox" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+        <Label text="Special needs:" GridPane.rowIndex="6" />
+        <TextField fx:id="specialNeedsField" GridPane.rowIndex="6" GridPane.columnIndex="1" promptText="Leave empty for none" />
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
             <buttons>
                 <Button fx:id="btnOk" mnemonicParsing="false" onAction="#clickOk" text="Ok" />
                 <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />

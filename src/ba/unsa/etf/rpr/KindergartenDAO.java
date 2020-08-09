@@ -4,13 +4,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class KindergartenDAO {
 	private static KindergartenDAO instance;
 	private Connection conn;
 
 	private String adminPassword = "11111111";
+	private int maximumCapacity = 100;
+	private int maximumClassSize = 10;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
@@ -291,6 +295,21 @@ public class KindergartenDAO {
 			e.printStackTrace();
 		}
 		return teacherClass;
+	}
+
+	public List<KindergartenTeacher> getAvailableTeachers() {
+		ArrayList<KindergartenTeacher> teachers = getTeachers();
+
+		List<KindergartenTeacher> filteredTeachers = teachers.stream().filter(t -> {
+			try {
+				return getTeacherClass(t.getId()).size() < maximumClassSize;
+			} catch (InvalidTeacherDataException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}).collect(Collectors.toList());
+
+		return filteredTeachers;
 	}
 
 	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
