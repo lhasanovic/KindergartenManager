@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -56,7 +57,28 @@ public class AdminController {
 	}
 
 	public void actionRegisterChild(ActionEvent actionEvent) {
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			String currentPassword = dao.getAdminPassword();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
+			RegisterChildController registerChildController = new RegisterChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
+			loader.setController(registerChildController);
+			root = loader.load();
+			stage.setTitle("Register a Child");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.setResizable(false);
+			stage.show();
 
+			stage.setOnHiding( event -> {
+				Child child = registerChildController.getChild();
+				if (child != null) {
+					dao.insertChild(child);
+				}
+			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void actionEditTeacher(ActionEvent actionEvent) {

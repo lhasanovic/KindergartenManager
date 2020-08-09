@@ -37,8 +37,8 @@
         <TextField fx:id="specialNeedsField" GridPane.rowIndex="6" GridPane.columnIndex="1" promptText="Leave empty for none" />
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
             <buttons>
-                <Button fx:id="btnOk" mnemonicParsing="false" onAction="#clickOk" text="Ok" />
-                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
+                <Button fx:id="okBtn" mnemonicParsing="false" onAction="#actionOk" text="Ok" />
+                <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" />
             </buttons>
         </ButtonBar>
     </children>
