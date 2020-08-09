@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -309,7 +310,13 @@ public class KindergartenDAO {
 				e.printStackTrace();
 				return false;
 			}
-		}).collect(Collectors.toList());
+		}).sorted(Comparator.comparingInt(t -> {
+			try {
+				return getTeacherClass(t.getId()).size();
+			} catch (InvalidTeacherDataException e) {
+				return 0;
+			}
+		})).collect(Collectors.toList());
 
 		return filteredTeachers;
 	}
