@@ -185,6 +185,18 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsAdmin() {
-		System.exit(0);
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
+			AdminController adminController = new AdminController();
+			loader.setController(adminController);
+			root = loader.load();
+			stage.setTitle("Admin Panel");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

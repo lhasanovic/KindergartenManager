@@ -10,7 +10,7 @@ public class KindergartenDAO {
 	private static KindergartenDAO instance;
 	private Connection conn;
 
-	private final String adminPassword = "12345678";
+	private String adminPassword = "11111111";
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
@@ -348,6 +348,10 @@ public class KindergartenDAO {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setAdminPassword(String newPassword) {
+		this.adminPassword = newPassword;
 	}
 
 	public String getAdminPassword() {
