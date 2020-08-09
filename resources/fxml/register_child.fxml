@@ -7,6 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/css/stylesheet.css" />
+    </stylesheets>
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints />
@@ -30,7 +33,7 @@
         <Label text="Date of birth:" GridPane.rowIndex="3" />
         <DatePicker fx:id="birthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label text="Phone number:" GridPane.rowIndex="4" />
-        <TextField fx:id="phoneNumberField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        <TextField fx:id="phoneNumberField" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="eg. 38761889825"/>
         <Label text="Teacher:" GridPane.rowIndex="5" />
         <ChoiceBox fx:id="teacherChoiceBox" GridPane.rowIndex="5" GridPane.columnIndex="1" />
         <Label text="Special needs:" GridPane.rowIndex="6" />

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,55 @@ public class RegisterChildController {
 			else
 				specialNeedsField.setText("");
 
+			firstNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+				if(!newVal) {
+					if(containsOnlyLetters(firstNameField.getText())) {
+						firstNameField.getStyleClass().removeAll();
+						firstNameField.getStyleClass().add("fieldRight");
+					} else {
+						firstNameField.getStyleClass().removeAll();
+						firstNameField.getStyleClass().add("fieldWrong");
+					}
+				}
+			});
+
+			lastNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+				if(!newVal) {
+					if(containsOnlyLetters(lastNameField.getText())) {
+						lastNameField.getStyleClass().removeAll();
+						lastNameField.getStyleClass().add("fieldRight");
+					} else {
+						lastNameField.getStyleClass().removeAll();
+						lastNameField.getStyleClass().add("fieldWrong");
+					}
+				}
+			});
+
+			parentNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+				if(!newVal) {
+					if(containsOnlyLetters(parentNameField.getText())) {
+						parentNameField.getStyleClass().removeAll();
+						parentNameField.getStyleClass().add("fieldRight");
+					} else {
+						parentNameField.getStyleClass().removeAll();
+						parentNameField.getStyleClass().add("fieldWrong");
+					}
+				}
+			});
+
+			phoneNumberField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+				if(!newVal) {
+					if(isPhoneNumberValid(phoneNumberField.getText())) {
+						phoneNumberField.getStyleClass().removeAll();
+						phoneNumberField.getStyleClass().add("fieldRight");
+					} else {
+						phoneNumberField.getStyleClass().removeAll();
+						phoneNumberField.getStyleClass().add("fieldWrong");
+					}
+				}
+			});
+
+
 		} else {
 			teacherChoiceBox.setValue(teacherChoiceBox.getItems().get(0));
 		}
@@ -60,10 +110,25 @@ public class RegisterChildController {
 	}
 
 	public void actionCancel(ActionEvent actionEvent) {
-
+		child = null;
+		Stage stage = (Stage) firstNameField.getScene().getWindow();
+		stage.close();
 	}
 
 	public Child getChild() {
 		return child;
+	}
+
+	private boolean containsOnlyLetters(String s) {
+		return ((s != null)
+				&& (!s.equals(""))
+				&& (s.matches("^[a-zA-Z]*$")));
+	}
+
+	private boolean isPhoneNumberValid(String s) {
+		return ((s != null)
+				&& (s.length() >= 7)
+				&& (s.length() <= 12)
+				&& (s.matches("^[0-9\\\\-]*$")));
 	}
 }
