@@ -11,7 +11,7 @@ public class PasswordController {
 	public PasswordField oldPasswordField;
 	public PasswordField newPasswordField;
 
-	private String currentPassword;
+	private final String currentPassword;
 	private String newPassword;
 
 	public PasswordController(String currentPassword) {
