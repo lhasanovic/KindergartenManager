@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <TableView fx:id="tableViewGradovi" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="colTeacherFirstName" prefWidth="100.0" text="First Name" />
+                <TableColumn fx:id="colTeacherLastName" prefWidth="90.0" text="Last Name" />
+                <TableColumn fx:id="colTeacherPhone" prefWidth="100.0" text="Phone" />
+                <TableColumn fx:id="colClassSize" prefWidth="100" text="Class Size"/>
+            </columns>
+        </TableView>
+    </center>
+    <right>
+        <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="hireTeacherBtn" mnemonicParsing="false" prefWidth="Infinity" onAction="#actionHireTeacher" text="Hire a teacher" />
+                <Button fx:id="fireTeacherBtn" mnemonicParsing="false" prefWidth="Infinity" onAction="#actionFireTeacher" text="Fire teacher" />
+                <Button fx:id="editTeacherBtn" mnemonicParsing="false" prefWidth="Infinity" onAction="#actionEditTeacher" text="Edit teacher" />
+                <Button fx:id="registerChildBtn" mnemonicParsing="false" prefWidth="Infinity" onAction="#actionRegisterChild" text="Register a child" />
+                <Button fx:id="changePasswordBtn" mnemonicParsing="false" prefWidth="Infinity" onAction="#actionChangePassword" text="Change password" />
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+    </right>
+</BorderPane>

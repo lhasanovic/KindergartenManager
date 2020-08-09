@@ -14,13 +14,13 @@ public class TeacherController {
 	public TableView<Child> tableViewChildren;
 	public TableColumn colChildId, colChildFirstName, colChildLastName, colChildActivity;
 	public TableColumn<Child, String> colChildBirth;
+
 	private ObservableList<Child> teacherClass;
 	private KindergartenDAO dao;
 
 	public TeacherController(ArrayList<Child> teacherClass) {
 		this.teacherClass = FXCollections.observableArrayList(teacherClass);
 		dao = KindergartenDAO.getInstance();
-		System.out.println(teacherClass.size());
 	}
 
 	@FXML
