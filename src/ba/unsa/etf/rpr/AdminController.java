@@ -74,6 +74,7 @@ public class AdminController {
 				Child child = registerChildController.getChild();
 				if (child != null) {
 					dao.insertChild(child);
+					teachers.setAll(dao.getTeachers());
 				}
 			} );
 		} catch (IOException e) {

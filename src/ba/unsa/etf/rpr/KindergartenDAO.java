@@ -108,6 +108,8 @@ public class KindergartenDAO {
 			else
 				insertChildStatement.setString(7, "None");
 
+			insertChildStatement.setInt(8, child.getTeacher().getId());
+
 			insertChildStatement.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();

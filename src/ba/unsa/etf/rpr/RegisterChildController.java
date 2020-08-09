@@ -4,10 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class RegisterChildController {
 	@FXML
 	public void initialize() {
 		teacherChoiceBox.setItems(teacherList);
+		birthDatePicker.setEditable(false);
 
 		if(child != null) {
 			firstNameField.setText(child.getFirstName());
@@ -41,7 +45,7 @@ public class RegisterChildController {
 
 			for(KindergartenTeacher t : teacherList) {
 				if(t.getId() == child.getTeacher().getId()) {
-					teacherChoiceBox.setValue(t);
+					teacherChoiceBox.getSelectionModel().select(t);
 					break;
 				}
 			}
@@ -51,62 +55,74 @@ public class RegisterChildController {
 			else
 				specialNeedsField.setText("");
 
-			firstNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-				if(!newVal) {
-					if(containsOnlyLetters(firstNameField.getText())) {
-						firstNameField.getStyleClass().removeAll();
-						firstNameField.getStyleClass().add("fieldRight");
-					} else {
-						firstNameField.getStyleClass().removeAll();
-						firstNameField.getStyleClass().add("fieldWrong");
-					}
-				}
-			});
-
-			lastNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-				if(!newVal) {
-					if(containsOnlyLetters(lastNameField.getText())) {
-						lastNameField.getStyleClass().removeAll();
-						lastNameField.getStyleClass().add("fieldRight");
-					} else {
-						lastNameField.getStyleClass().removeAll();
-						lastNameField.getStyleClass().add("fieldWrong");
-					}
-				}
-			});
-
-			parentNameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-				if(!newVal) {
-					if(containsOnlyLetters(parentNameField.getText())) {
-						parentNameField.getStyleClass().removeAll();
-						parentNameField.getStyleClass().add("fieldRight");
-					} else {
-						parentNameField.getStyleClass().removeAll();
-						parentNameField.getStyleClass().add("fieldWrong");
-					}
-				}
-			});
-
-			phoneNumberField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-				if(!newVal) {
-					if(isPhoneNumberValid(phoneNumberField.getText())) {
-						phoneNumberField.getStyleClass().removeAll();
-						phoneNumberField.getStyleClass().add("fieldRight");
-					} else {
-						phoneNumberField.getStyleClass().removeAll();
-						phoneNumberField.getStyleClass().add("fieldWrong");
-					}
-				}
-			});
-
-
 		} else {
-			teacherChoiceBox.setValue(teacherChoiceBox.getItems().get(0));
+			teacherChoiceBox.getSelectionModel().selectFirst();
 		}
+
+		firstNameField.textProperty().addListener((obs, oldVal, newVal) -> {
+			if(containsOnlyLetters(newVal)) {
+				firstNameField.getStyleClass().removeAll("fieldWrong");
+				firstNameField.getStyleClass().add("fieldRight");
+			} else {
+				firstNameField.getStyleClass().removeAll("fieldRight");
+				firstNameField.getStyleClass().add("fieldWrong");
+			}
+		});
+
+		lastNameField.textProperty().addListener((obs, oldVal, newVal) -> {
+			if(containsOnlyLetters(newVal)) {
+				lastNameField.getStyleClass().removeAll("fieldWrong");
+				lastNameField.getStyleClass().add("fieldRight");
+			} else {
+				lastNameField.getStyleClass().removeAll("fieldRight");
+				lastNameField.getStyleClass().add("fieldWrong");
+			}
+		});
+
+		parentNameField.textProperty().addListener((obs, oldVal, newVal) -> {
+			if(containsOnlyLetters(newVal)) {
+				parentNameField.getStyleClass().removeAll("fieldWrong");
+				parentNameField.getStyleClass().add("fieldRight");
+			} else {
+				parentNameField.getStyleClass().removeAll("fieldRight");
+				parentNameField.getStyleClass().add("fieldWrong");
+			}
+		});
+
+		phoneNumberField.textProperty().addListener((obs, oldVal, newVal) -> {
+			if(isPhoneNumberValid(newVal)) {
+				phoneNumberField.getStyleClass().removeAll("fieldWrong");
+				phoneNumberField.getStyleClass().add("fieldRight");
+			} else {
+				phoneNumberField.getStyleClass().removeAll("fieldRight");
+				phoneNumberField.getStyleClass().add("fieldWrong");
+			}
+		});
 	}
 
 	public void actionOk(ActionEvent actionEvent) {
+		if(areAllTextFieldsValid() && birthDatePicker.getValue() != null) {
+			try {
+				new Child().setDateOfBirth(birthDatePicker.getValue());
 
+				if(child == null)
+					child = new Child();
+
+				child.setFirstName(firstNameField.getText());
+				child.setLastName(lastNameField.getText());
+				child.setParent(new Parent(parentNameField.getText(), child.getLastName(), phoneNumberField.getText()));
+				child.setDateOfBirth(birthDatePicker.getValue());
+				child.setTeacher(teacherChoiceBox.getValue());
+
+				Stage stage = (Stage) firstNameField.getScene().getWindow();
+				stage.close();
+
+			} catch (InvalidChildBirthDateException e) {
+				String title = e.getMessage();
+				String text = "";
+				notify(title, text);
+			}
+		}
 	}
 
 	public void actionCancel(ActionEvent actionEvent) {
@@ -120,9 +136,15 @@ public class RegisterChildController {
 	}
 
 	private boolean containsOnlyLetters(String s) {
-		return ((s != null)
-				&& (!s.equals(""))
-				&& (s.matches("^[a-zA-Z]*$")));
+		if(s == null) return false;
+
+		String bosnianSpecificLetters = "čćžšđČĆŽŠĐ";
+		if(s.length() < 3) return false;
+		for(int i = 0; i < s.length(); i++) {
+			if(!((s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') || (s.charAt(i) >= 'a' && s.charAt(i) <= 'z')
+					|| (s.charAt(i) == '-') || (s.charAt(i) == ' ') || bosnianSpecificLetters.contains(s.charAt(i) + ""))) return false;
+		}
+		return true;
 	}
 
 	private boolean isPhoneNumberValid(String s) {
@@ -130,5 +152,27 @@ public class RegisterChildController {
 				&& (s.length() >= 7)
 				&& (s.length() <= 12)
 				&& (s.matches("^[0-9\\\\-]*$")));
+	}
+
+	private boolean isTextFieldValid(TextField t) {
+		for (String s : t.getStyleClass()) {
+			if(s.equals("fieldRight"))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean areAllTextFieldsValid() {
+		return isTextFieldValid(firstNameField) && isTextFieldValid(lastNameField) && isTextFieldValid(parentNameField)
+				&& isTextFieldValid(phoneNumberField);
+	}
+
+	private void notify(String title, String text) {
+		Notifications notificationBuilder = Notifications.create()
+				.title(title)
+				.text(text)
+				.hideAfter(Duration.seconds(2))
+				.position(Pos.BOTTOM_RIGHT);
+		notificationBuilder.showError();
 	}
 }

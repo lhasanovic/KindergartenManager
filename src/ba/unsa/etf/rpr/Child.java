@@ -63,8 +63,8 @@ public class Child {
 		return "" + dateOfBirth.getDayOfMonth() + "." + dateOfBirth.getMonthValue() + "." + dateOfBirth.getYear();
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setDateOfBirth(LocalDate dateOfBirth) throws InvalidChildBirthDateException {
+		setDateOfBirth(dateOfBirth.getYear(), dateOfBirth.getMonthValue(), dateOfBirth.getDayOfMonth());
 	}
 
 	public Parent getParent() {
