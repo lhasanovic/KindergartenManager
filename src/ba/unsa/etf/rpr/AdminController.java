@@ -26,12 +26,18 @@ public class AdminController {
 	public TableColumn colTeacherId, colTeacherFirstName, colTeacherLastName, colTeacherPhone;
 	public TableColumn<KindergartenTeacher, String> colClassSize;
 
+	public TableView<Child> childrenTableView;
+	public TableColumn colChildId, colChildFirstName, colChildLastName;
+	public TableColumn<Child, String> colChildBirth, colChildParentName, colChildTeacher;
+
 	private KindergartenDAO dao;
 	private ObservableList<KindergartenTeacher> teachers;
+	private ObservableList<Child> children;
 
 	public AdminController() {
 		this.dao = KindergartenDAO.getInstance();
 		this.teachers = FXCollections.observableArrayList(dao.getTeachers());
+		this.children = FXCollections.observableArrayList(dao.getChildren());
 	}
 
 	@FXML
@@ -49,6 +55,16 @@ public class AdminController {
 				return null;
 			}
 		});
+
+		childrenTableView.setItems(children);
+		colChildId.setCellValueFactory(new PropertyValueFactory("id"));
+		colChildFirstName.setCellValueFactory(new PropertyValueFactory("firstName"));
+		colChildLastName.setCellValueFactory(new PropertyValueFactory("lastName"));
+		colChildBirth.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDateOfBirthString()));
+		colChildParentName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getParent().getFirstName()));
+		colChildTeacher.setCellValueFactory(data ->
+				new SimpleStringProperty(data.getValue().getTeacher().getFirstName() + " " +
+				data.getValue().getTeacher().getLastName()));
 	}
 
 	public void actionHireTeacher(ActionEvent actionEvent) {
@@ -69,6 +85,7 @@ public class AdminController {
 				if (teacher != null) {
 					dao.insertTeacher(teacher);
 					teachers.setAll(dao.getTeachers());
+					children.setAll(dao.getChildren());
 				}
 			} );
 		} catch (IOException e) {
@@ -90,6 +107,7 @@ public class AdminController {
 		if (result.get() == ButtonType.OK){
 			dao.deleteTeacher(teacher);
 			teachers.setAll(dao.getTeachers());
+			children.setAll(dao.getChildren());
 		} else {
 			return;
 		}
@@ -124,20 +142,24 @@ public class AdminController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
+			Child child = childrenTableView.getSelectionModel().getSelectedItem();
+			if(child == null)
+				return;
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
-			RegisterEditChildController registerEditChildController = new RegisterEditChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
+			RegisterEditChildController registerEditChildController = new RegisterEditChildController(child, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
 			loader.setController(registerEditChildController);
 			root = loader.load();
-			stage.setTitle("Register a Child");
+			stage.setTitle("Edit Child");
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
 
 			stage.setOnHiding( event -> {
-				Child child = registerEditChildController.getChild();
-				if (child != null) {
-					dao.insertChild(child);
+				Child editedChild = registerEditChildController.getChild();
+				if (editedChild != null) {
+					dao.editChild(editedChild);
 					teachers.setAll(dao.getTeachers());
+					children.setAll(dao.getChildren());
 				}
 			} );
 		} catch (IOException e) {
@@ -166,6 +188,7 @@ public class AdminController {
 				if (editedTeacher != null) {
 					dao.editTeacher(editedTeacher);
 					teachers.setAll(dao.getTeachers());
+					children.setAll(dao.getChildren());
 				}
 			} );
 		} catch (IOException e) {
@@ -194,6 +217,26 @@ public class AdminController {
 			} );
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void actionDeleteChild(ActionEvent actionEvent) {
+		Child child = childrenTableView.getSelectionModel().getSelectedItem();
+		if(child == null)
+			return;
+
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Delete the Child");
+		alert.setContentText("Deleting this child will delete it completely from the database?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			dao.deleteChild(child);
+			teachers.setAll(dao.getTeachers());
+			children.setAll(dao.getChildren());
+		} else {
+			return;
 		}
 	}
 }

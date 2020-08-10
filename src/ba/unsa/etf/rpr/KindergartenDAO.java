@@ -164,7 +164,8 @@ public class KindergartenDAO {
 			else
 				editChildStatement.setString(6, "None");
 
-			editChildStatement.setInt(7, child.getId());
+			editChildStatement.setInt(7, child.getTeacher().getId());
+			editChildStatement.setInt(8, child.getId());
 
 			editChildStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -352,9 +353,9 @@ public class KindergartenDAO {
 		int year = Integer.parseInt(dateParts[2]);
 
 		if(rs.getString(7).equals("None"))
-			return new Child(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(7)));
+			return new Child(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(8)));
 		else
-			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(7)), rs.getString(8));
+			return new SpecialNeedsChild(rs.getInt(1), rs.getString(2), rs.getString(3), day, month, year, rs.getString(5), rs.getString(6), getTeacher(rs.getInt(8)), rs.getString(7));
 	}
 
 	private KindergartenTeacher getTeacherFromResultSet(ResultSet rs) throws SQLException {
