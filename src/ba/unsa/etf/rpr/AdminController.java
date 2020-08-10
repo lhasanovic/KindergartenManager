@@ -104,7 +104,31 @@ public class AdminController {
 	}
 
 	public void actionEditTeacher(ActionEvent actionEvent) {
+		Stage stage = new Stage();
+		Parent root = null;
+		KindergartenTeacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+		if(teacher == null)
+			return;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"));
+			HireEditTeacherController hireEditTeacherController = new HireEditTeacherController(teacher);
+			loader.setController(hireEditTeacherController);
+			root = loader.load();
+			stage.setTitle("Edit Teacher");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.setResizable(false);
+			stage.show();
 
+			stage.setOnHiding( event -> {
+				KindergartenTeacher editedTeacher = hireEditTeacherController.getTeacher();
+				if (editedTeacher != null) {
+					dao.editTeacher(editedTeacher);
+					teachers.setAll(dao.getTeachers());
+				}
+			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void actionChangePassword(ActionEvent actionEvent) {

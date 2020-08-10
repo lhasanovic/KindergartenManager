@@ -1,7 +1,12 @@
 package ba.unsa.etf.rpr;
 
+import com.github.tsijercic1.InvalidXMLException;
+import com.github.tsijercic1.Node;
+import com.github.tsijercic1.XMLParser;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,9 +18,10 @@ public class KindergartenDAO {
 	private static KindergartenDAO instance;
 	private Connection conn;
 
-	private String adminPassword = "11111111";
-	private int maximumCapacity = 100;
-	private int maximumClassSize = 10;
+	private String name;
+	private String adminPassword;
+	private int maximumCapacity;
+	private int maximumClassSize;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
@@ -27,6 +33,7 @@ public class KindergartenDAO {
 	}
 
 	private KindergartenDAO() {
+		loadInfoFromXML();
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:database.db");
 		} catch (SQLException e) {
@@ -62,6 +69,19 @@ public class KindergartenDAO {
 
 			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=?");
 		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void loadInfoFromXML() {
+		try {
+			XMLParser xmlParser = new XMLParser("kindergarten.xml");
+			Node node = xmlParser.getDocumentRootNode();
+			name = node.getChildNode("name").getContent();
+			adminPassword = node.getChildNode("password").getContent();
+			maximumCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
+			maximumClassSize = Integer.parseInt(node.getChildNode("classSize").getContent());
+		} catch (IOException | InvalidXMLException e) {
 			e.printStackTrace();
 		}
 	}

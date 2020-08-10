@@ -32,6 +32,10 @@ public class HireEditTeacherController {
 			lastNameField.setText(teacher.getLastName());
 			phoneNumberField.setText(teacher.getPhoneNumber());
 
+			firstNameField.getStyleClass().add("fieldRight");
+			lastNameField.getStyleClass().add("fieldRight");
+			phoneNumberField.getStyleClass().add("fieldRight");
+
 			if(teacher instanceof SpecialNeedsKindergartenTeacher)
 				specialNeeds.selectToggle(specialNeedsYes);
 			else

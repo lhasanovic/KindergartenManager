@@ -43,6 +43,11 @@ public class RegisterEditChildController {
 			birthDatePicker.setValue(child.getDateOfBirth());
 			phoneNumberField.setText(child.getParent().getPhoneNumber());
 
+			firstNameField.getStyleClass().add("fieldRight");
+			lastNameField.getStyleClass().add("fieldRight");
+			parentNameField.getStyleClass().add("fieldRight");
+			phoneNumberField.getStyleClass().add("fieldRight");
+
 			for(KindergartenTeacher t : teacherList) {
 				if(t.getId() == child.getTeacher().getId()) {
 					teacherChoiceBox.getSelectionModel().select(t);
