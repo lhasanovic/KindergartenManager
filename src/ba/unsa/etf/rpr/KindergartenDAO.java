@@ -6,7 +6,11 @@ import com.github.tsijercic1.XMLParser;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,7 +24,7 @@ public class KindergartenDAO {
 
 	private String name;
 	private String adminPassword;
-	private int maximumCapacity;
+	private int totalCapacity;
 	private int maximumClassSize;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
@@ -66,7 +70,6 @@ public class KindergartenDAO {
 			editTeacherStatement = conn.prepareStatement("UPDATE teachers SET first_name=?, last_name=?, phone_number=?, special_needs=? WHERE id=?");
 			getTeachersStatement = conn.prepareStatement("SELECT * FROM teachers ORDER BY last_name");
 			getNextTeacherIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM teachers");
-
 			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=?");
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -79,7 +82,7 @@ public class KindergartenDAO {
 			Node node = xmlParser.getDocumentRootNode();
 			name = node.getChildNode("name").getContent();
 			adminPassword = node.getChildNode("password").getContent();
-			maximumCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
+			totalCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
 			maximumClassSize = Integer.parseInt(node.getChildNode("classSize").getContent());
 		} catch (IOException | InvalidXMLException e) {
 			e.printStackTrace();
@@ -399,10 +402,26 @@ public class KindergartenDAO {
 	}
 
 	public void setAdminPassword(String newPassword) {
-		this.adminPassword = newPassword;
+		FileWriter fw = null;
+		try {
+			String content = Files.readString(Path.of("kindergarten.xml"), StandardCharsets.US_ASCII);
+			content = content.replace(adminPassword, newPassword);
+			fw = new FileWriter("kindergarten.xml");
+			fw.write(content);
+			fw.close();
+
+			this.adminPassword = newPassword;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getAdminPassword() {
 		return adminPassword;
 	}
+
+	public String getName() { return name; }
+
+	public int getTotalCapacity() { return totalCapacity; }
+	public int getMaximumClassSize() { return maximumClassSize; }
 }

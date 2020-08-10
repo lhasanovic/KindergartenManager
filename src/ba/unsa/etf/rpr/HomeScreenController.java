@@ -40,6 +40,8 @@ public class HomeScreenController {
 		nameField.setVisible(false);
 		confirmBtn.setVisible(false);
 		enterIdLabel.setVisible(false);
+
+		welcomeLabel.setText("Welcome to " + dao.getName());
 	}
 
 	public void actionTeacherBtn(ActionEvent actionEvent) {
