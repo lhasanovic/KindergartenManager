@@ -10,7 +10,7 @@
     <center>
         <TableView fx:id="teacherTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="Teacher ID" />
                 <TableColumn fx:id="colTeacherFirstName" prefWidth="100.0" text="First Name" />
                 <TableColumn fx:id="colTeacherLastName" prefWidth="90.0" text="Last Name" />
                 <TableColumn fx:id="colTeacherPhone" prefWidth="100.0" text="Phone" />
@@ -25,9 +25,10 @@
                 <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="Fire teacher" />
                 <Button fx:id="editTeacherBtn" mnemonicParsing="false" onAction="#actionEditTeacher" prefWidth="Infinity" text="Edit teacher" />
                 <Button fx:id="registerChildBtn" mnemonicParsing="false" onAction="#actionRegisterChild" prefWidth="Infinity" text="Register a child" />
+            <Button fx:id="editChildBtn" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#actionEditChild" prefWidth="Infinity" text="Edit child" />
                 <Button fx:id="changePasswordBtn" mnemonicParsing="false" onAction="#actionChangePassword" prefWidth="Infinity" text="Change password">
                <font>
-                  <Font size="10.0" />
+                  <Font size="11.0" />
                </font></Button>
             </children>
             <padding>
@@ -35,4 +36,16 @@
             </padding>
         </VBox>
     </right>
+   <bottom>
+       <TableView fx:id="tableViewChildren" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <columns>
+               <TableColumn fx:id="colChildId" prefWidth="70.0" text="Child ID" />
+               <TableColumn fx:id="colChildFirstName" prefWidth="100.0" text="First Name" />
+               <TableColumn fx:id="colChildLastName" prefWidth="90.0" text="Last Name" />
+               <TableColumn fx:id="colChildParentName" prefWidth="100.0" text="Parent Name" />
+               <TableColumn fx:id="colChildBirth" prefWidth="100.0" text="Date of Birth" />
+               <TableColumn fx:id="colChildTeacher" prefWidth="100.0" text="Teacher" />
+           </columns>
+       </TableView>
+   </bottom>
 </BorderPane>

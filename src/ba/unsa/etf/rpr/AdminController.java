@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -74,14 +77,53 @@ public class AdminController {
 	}
 
 	public void actionFireTeacher(ActionEvent actionEvent) {
+		KindergartenTeacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+		if(teacher == null)
+			return;
 
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Fire the Teacher");
+		alert.setContentText("Firing this teacher will delete it completely from the database?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			dao.deleteTeacher(teacher);
+			teachers.setAll(dao.getTeachers());
+		} else {
+			return;
+		}
 	}
 
 	public void actionRegisterChild(ActionEvent actionEvent) {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			String currentPassword = dao.getAdminPassword();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
+			RegisterEditChildController registerEditChildController = new RegisterEditChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
+			loader.setController(registerEditChildController);
+			root = loader.load();
+			stage.setTitle("Register a Child");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.setResizable(false);
+			stage.show();
+
+			stage.setOnHiding( event -> {
+				Child child = registerEditChildController.getChild();
+				if (child != null) {
+					dao.insertChild(child);
+					teachers.setAll(dao.getTeachers());
+				}
+			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actionEditChild(ActionEvent actionEvent) {
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
 			RegisterEditChildController registerEditChildController = new RegisterEditChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
 			loader.setController(registerEditChildController);
@@ -154,8 +196,4 @@ public class AdminController {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
 }
