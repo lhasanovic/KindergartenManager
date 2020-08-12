@@ -364,7 +364,7 @@ public class KindergartenDAO {
 		}
 	}
 
-	public ArrayList<DiaryEntry> getDiaryForChild(Child child) {
+	public ChildDiary getDiaryForChild(Child child) {
 		try {
 			getDiaryForChildStatement.setInt(1, child.getId());
 
@@ -398,7 +398,7 @@ public class KindergartenDAO {
 
 				list.add(entry);
 			}
-			return list;
+			return new ChildDiary(child, list);
 		} catch (SQLException | InvalidChildDataException e) {
 			e.printStackTrace();
 			return null;

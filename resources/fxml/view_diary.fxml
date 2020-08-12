@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <TableView fx:id="tableViewDiary" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colDate" prefWidth="60.0" text="Date" />
+                <TableColumn fx:id="colTime" prefWidth="60.0" text="Time" />
+                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="Activity" />
+                <TableColumn fx:id="colDescription" prefWidth="250" text="Description" />
+            </columns>
+        </TableView>
+    </center>
+    <right>
+        <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="addDiaryEntryBtn" onAction="#actionAddDiaryEntry" mnemonicParsing="false" prefWidth="Infinity" text="Add diary entry" />
+                <Button fx:id="editDiaryEntryBtn" onAction="#actionEditDiaryEntry" mnemonicParsing="false"  prefWidth="Infinity" text="View diary" />
+                <Button fx:id="deleteDiaryEntryBtn" onAction="actionDeleteDiaryEntry" mnemonicParsing="false" prefWidth="Infinity" text="Delete diary entry" />
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+    </right>
+</BorderPane>

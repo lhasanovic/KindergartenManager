@@ -65,6 +65,16 @@ public class AddDiaryEntryController {
 				hourField.getStyleClass().add("fieldWrong");
 			}
 		});
+
+		if(matchesHourFormat(hourField.getText()))
+			hourField.getStyleClass().add("fieldRight");
+		else
+			hourField.getStyleClass().add("fieldWrong");
+
+		if(matchesMinuteFormat(minuteField.getText()))
+			minuteField.getStyleClass().add("fieldRight");
+		else
+			minuteField.getStyleClass().add("fieldWrong");
 	}
 
 	public void actionOk(ActionEvent actionEvent) {

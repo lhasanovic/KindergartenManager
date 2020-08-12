@@ -99,4 +99,35 @@ public class TeacherController {
 			e.printStackTrace();
 		}
 	}
+
+	public void actionViewDiary(ActionEvent actionEvent) {
+		Child child = tableViewChildren.getSelectionModel().getSelectedItem();
+		if(child == null)
+			return;
+
+		Stage stage = new Stage();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/view_diary.fxml"));
+			ViewDiaryController viewDiaryController = new ViewDiaryController(dao.getDiaryForChild(child));
+			loader.setController(viewDiaryController);
+			root = loader.load();
+			stage.setTitle("View Diary");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.setResizable(false);
+			stage.show();
+
+			stage.setOnHiding( event -> {
+				ChildDiary childDiary = viewDiaryController.getChildDiary();
+				if (childDiary != null) {
+					dao.deleteDiaryForChild(child);
+					for(DiaryEntry de : childDiary.getDiary())
+						dao.insertDiaryEntry(child, de);
+					tableViewChildren.refresh();
+				}
+			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
