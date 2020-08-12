@@ -4,7 +4,6 @@ import com.github.tsijercic1.InvalidXMLException;
 import com.github.tsijercic1.Node;
 import com.github.tsijercic1.XMLParser;
 
-import javax.xml.transform.Result;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -348,13 +347,14 @@ public class KindergartenDAO {
 		return filteredTeachers;
 	}
 
-	public void insertDiaryEntry(Child child, LocalDateTime timeDate, DiaryEntry entry) {
+	public void insertDiaryEntry(Child child, DiaryEntry entry) {
 		try {
 			insertDiaryEntryStatement.setInt(1, child.getId());
-			insertDiaryEntryStatement.setInt(2, timeDate.getYear());
-			insertDiaryEntryStatement.setInt(3, timeDate.getMonthValue());
-			insertDiaryEntryStatement.setInt(4, timeDate.getDayOfMonth());
-			insertDiaryEntryStatement.setString(5, "" + timeDate.getHour() + ":" + timeDate.getMinute());
+			insertDiaryEntryStatement.setInt(2, entry.getTimeDate().getYear());
+			insertDiaryEntryStatement.setInt(3, entry.getTimeDate().getMonthValue());
+			insertDiaryEntryStatement.setInt(4, entry.getTimeDate().getDayOfMonth());
+			insertDiaryEntryStatement.setString(5, "" + entry.getTimeDate().getHour() + ":" +
+					entry.getTimeDate().getMinute());
 			insertDiaryEntryStatement.setString(6, entry.getActivity().toString());
 			insertDiaryEntryStatement.setString(7, entry.getDescription());
 
@@ -364,7 +364,7 @@ public class KindergartenDAO {
 		}
 	}
 
-	public HashMap<LocalDateTime, DiaryEntry> getDiaryForChild(Child child) {
+	public ArrayList<DiaryEntry> getDiaryForChild(Child child) {
 		try {
 			getDiaryForChildStatement.setInt(1, child.getId());
 
@@ -372,7 +372,7 @@ public class KindergartenDAO {
 			if(!rs.next())
 				return null;
 
-			HashMap<LocalDateTime, DiaryEntry> map = new HashMap<>();
+			ArrayList<DiaryEntry> list = new ArrayList<>();
 
 			while(rs.next()) {
 				String time = rs.getString(5);
@@ -386,7 +386,7 @@ public class KindergartenDAO {
 
 				for(ChildActivity ca : ChildActivity.values()) {
 					if(ca.toString().equals(rs.getString(6))) {
-						entry = new DiaryEntry(ca);
+						entry = new DiaryEntry(timeDate, ca);
 						break;
 					}
 				}
@@ -396,9 +396,9 @@ public class KindergartenDAO {
 
 				entry.setDescription(rs.getString(7));
 
-				map.put(timeDate, entry);
+				list.add(entry);
 			}
-			return map;
+			return list;
 		} catch (SQLException | InvalidChildDataException e) {
 			e.printStackTrace();
 			return null;

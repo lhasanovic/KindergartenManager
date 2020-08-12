@@ -1,18 +1,17 @@
 package ba.unsa.etf.rpr;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class ChildDiary {
 	private Child child;
-	private HashMap<LocalDateTime, DiaryEntry> diary;
+	private ArrayList<DiaryEntry> diary;
 
 	public ChildDiary(Child child) {
 		this.child = child;
-		diary = new HashMap<>();
+		diary = new ArrayList<>();
 	}
 
-	public ChildDiary(Child child, HashMap<LocalDateTime, DiaryEntry> diary) {
+	public ChildDiary(Child child, ArrayList<DiaryEntry> diary) {
 		this.child = child;
 		this.diary = diary;
 	}
@@ -25,15 +24,15 @@ public class ChildDiary {
 		this.child = child;
 	}
 
-	public HashMap<LocalDateTime, DiaryEntry> getDiary() {
+	public ArrayList<DiaryEntry> getDiary() {
 		return diary;
 	}
 
-	public void setDiary(HashMap<LocalDateTime, DiaryEntry> diary) {
+	public void setDiary(ArrayList<DiaryEntry> diary) {
 		this.diary = diary;
 	}
 
-	public void addDiaryEntry(LocalDateTime timeDate, DiaryEntry entry) {
-		diary.put(timeDate, entry);
+	public void addDiaryEntry(DiaryEntry entry) {
+		diary.add(entry);
 	}
 }
