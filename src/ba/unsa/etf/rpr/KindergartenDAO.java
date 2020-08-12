@@ -28,8 +28,8 @@ public class KindergartenDAO {
 	private int maximumClassSize;
 
 	private PreparedStatement insertChildStatement, getChildStatement, findChildStatement, deleteChildStatement, editChildStatement, getChildrenStatement, getNextChildIdStatement;
-	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement;
-	private PreparedStatement getTeacherClassStatement;
+	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement, getTeacherClassStatement;
+	private PreparedStatement insertDiaryEntryStatement, getDiaryForChildStatement, deleteDiaryForChildStatement;
 
 	public static KindergartenDAO getInstance() {
 		if (instance == null) instance = new KindergartenDAO();
@@ -71,6 +71,10 @@ public class KindergartenDAO {
 			getTeachersStatement = conn.prepareStatement("SELECT * FROM teachers ORDER BY last_name");
 			getNextTeacherIdStatement = conn.prepareStatement("SELECT MAX(id)+1 FROM teachers");
 			getTeacherClassStatement = conn.prepareStatement("SELECT * FROM children WHERE teacher=?");
+
+			insertDiaryEntryStatement = conn.prepareStatement("INSERT INTO diary VALUES (?,?,?,?,?,?,?)");
+			getDiaryForChildStatement = conn.prepareStatement("SELECT * FROM diary WHERE child=?");
+			deleteDiaryForChildStatement = conn.prepareStatement("DELETE FROM diary WHERE child=?");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
