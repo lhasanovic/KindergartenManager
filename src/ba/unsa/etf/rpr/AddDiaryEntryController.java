@@ -8,12 +8,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalTime;
 
 public class AddDiaryEntryController {
 	public ChoiceBox<Child> childBox;
@@ -24,9 +25,14 @@ public class AddDiaryEntryController {
 
 	private Child child;
 	private ObservableList<Child> children;
+	private DiaryEntry diaryEntry;
 
 	public AddDiaryEntryController(Child child, ObservableList<Child> children) {
-		this.child = child;
+		if(child == null)
+			this.child = children.get(0);
+		else
+			this.child = child;
+
 		this.children = children;
 	}
 
@@ -72,9 +78,20 @@ public class AddDiaryEntryController {
 				String text = "Date can't be older than the child!";
 				notify(title, text);
 			} else {
+				LocalDateTime localDateTime = LocalDateTime.of(diaryDatePicker.getValue(), LocalTime.of(parseHourOrMinute(hourField.getText()), parseHourOrMinute(minuteField.getText())));
+				diaryEntry = new DiaryEntry(localDateTime, childActivityBox.getSelectionModel().getSelectedItem(), descriptionArea.getText());
 
+				Stage stage = (Stage) childBox.getScene().getWindow();
+				stage.close();
 			}
 		}
+	}
+
+	public void actionCancel(ActionEvent actionEvent) {
+		diaryEntry = null;
+
+		Stage stage = (Stage) childBox.getScene().getWindow();
+		stage.close();
 	}
 
 	private boolean matchesHourFormat(String s) {
@@ -82,10 +99,7 @@ public class AddDiaryEntryController {
 				s.length() != 0 &&
 				s.matches("^[0-9]{1,2}?$");
 
-		if(s.charAt(0) == '0')
-			s = s.substring(1);
-
-		int hours = Integer.parseInt(s);
+		int hours = parseHourOrMinute(s);
 
 		return matches && hours >= 0 && hours <= 23;
 	}
@@ -95,12 +109,16 @@ public class AddDiaryEntryController {
 				s.length() != 0 &&
 				s.matches("^[0-9]{1,2}?$");
 
+		int minutes = parseHourOrMinute(s);
+
+		return matches && minutes >= 0 && minutes <= 59;
+	}
+
+	private int parseHourOrMinute(String s) {
 		if(s.charAt(0) == '0')
 			s = s.substring(1);
 
-		int minutes = Integer.parseInt(s);
-
-		return matches && minutes >= 0 && minutes <= 59;
+		return Integer.parseInt(s);
 	}
 
 	private boolean allGood() {
@@ -115,5 +133,9 @@ public class AddDiaryEntryController {
 				.hideAfter(Duration.seconds(2))
 				.position(Pos.BOTTOM_RIGHT);
 		notificationBuilder.showError();
+	}
+
+	public DiaryEntry getDiaryEntry() {
+		return diaryEntry;
 	}
 }

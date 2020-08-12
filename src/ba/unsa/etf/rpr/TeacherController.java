@@ -78,19 +78,20 @@ public class TeacherController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/set_activity.fxml"));
-			SetActivityController setActivityController = new SetActivityController(child);
-			loader.setController(setActivityController);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
+			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, teacherClass);
+			loader.setController(addDiaryEntryController);
 			root = loader.load();
-			stage.setTitle("Change Activity");
+			stage.setTitle("Add Diary Entry");
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
 
 			stage.setOnHiding( event -> {
-				Child editedChild = setActivityController.getChild();
-				if (editedChild != null) {
-					child.setActivity(editedChild.getActivity());
+				DiaryEntry diaryEntry = addDiaryEntryController.getDiaryEntry();
+				if (diaryEntry != null) {
+					child.setActivity(diaryEntry.getActivity());
+					dao.insertDiaryEntry(child, diaryEntry);
 					tableViewChildren.refresh();
 				}
 			} );
