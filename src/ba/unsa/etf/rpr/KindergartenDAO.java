@@ -4,6 +4,7 @@ import com.github.tsijercic1.InvalidXMLException;
 import com.github.tsijercic1.Node;
 import com.github.tsijercic1.XMLParser;
 
+import javax.xml.transform.Result;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,10 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class KindergartenDAO {
@@ -347,6 +346,72 @@ public class KindergartenDAO {
 		})).collect(Collectors.toList());
 
 		return filteredTeachers;
+	}
+
+	public void insertDiaryEntry(Child child, LocalDateTime timeDate, DiaryEntry entry) {
+		try {
+			insertDiaryEntryStatement.setInt(1, child.getId());
+			insertDiaryEntryStatement.setInt(2, timeDate.getYear());
+			insertDiaryEntryStatement.setInt(3, timeDate.getMonthValue());
+			insertDiaryEntryStatement.setInt(4, timeDate.getDayOfMonth());
+			insertDiaryEntryStatement.setString(5, "" + timeDate.getHour() + ":" + timeDate.getMinute());
+			insertDiaryEntryStatement.setString(6, entry.getActivity().toString());
+			insertDiaryEntryStatement.setString(7, entry.getDescription());
+
+			insertDiaryEntryStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public HashMap<LocalDateTime, DiaryEntry> getDiaryForChild(Child child) {
+		try {
+			getDiaryForChildStatement.setInt(1, child.getId());
+
+			ResultSet rs = getDiaryForChildStatement.executeQuery();
+			if(!rs.next())
+				return null;
+
+			HashMap<LocalDateTime, DiaryEntry> map = new HashMap<>();
+
+			while(rs.next()) {
+				String time = rs.getString(5);
+				String[] timeParts = time.split(":");
+				int hour = Integer.parseInt(timeParts[0]);
+				int minute = Integer.parseInt(timeParts[1]);
+				LocalDateTime timeDate = LocalDateTime.of(rs.getInt(2), rs.getInt(3), rs.getInt(4),
+						hour, minute);
+
+				DiaryEntry entry = null;
+
+				for(ChildActivity ca : ChildActivity.values()) {
+					if(ca.toString().equals(rs.getString(6))) {
+						entry = new DiaryEntry(ca);
+						break;
+					}
+				}
+
+				if(entry == null)
+					throw new InvalidChildDataException("No such child activity!");
+
+				entry.setDescription(rs.getString(7));
+
+				map.put(timeDate, entry);
+			}
+			return map;
+		} catch (SQLException | InvalidChildDataException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public void deleteDiaryForChild(Child child) {
+		try {
+			deleteDiaryForChildStatement.setInt(1, child.getId());
+			deleteDiaryForChildStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Child getChildFromResultSet(ResultSet rs) throws SQLException, InvalidChildBirthDateException {
