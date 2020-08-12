@@ -19,7 +19,7 @@
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnDodajGrad" mnemonicParsing="false" prefWidth="Infinity" text="Nesto" />
+                <Button fx:id="setActivityBtn" onAction="#actionSetActivity" mnemonicParsing="false" prefWidth="Infinity" text="Nesto" />
                 <Button fx:id="btnDodajDrzavu" mnemonicParsing="false" prefWidth="Infinity" text="Nesto" />
                 <Button fx:id="btnIzmijeniGrad" mnemonicParsing="false"  prefWidth="Infinity" text="Nesto" />
                 <Button fx:id="btnObrisiGrad" mnemonicParsing="false" prefWidth="Infinity" text="Nesto" />
