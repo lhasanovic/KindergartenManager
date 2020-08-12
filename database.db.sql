@@ -23,4 +23,16 @@ CREATE TABLE IF NOT EXISTS `children` (
 INSERT INTO `children` VALUES (10001, 'Niko', 'Nikić', '01.01.2017', 'Ivan', '38761123456', 'None', 10004);
 INSERT INTO `children` VALUES (10002, 'Mujo', 'Mujić', '02.02.2017', 'Ahmed', '38761111222', 'None', 10004);
 INSERT INTO `children` VALUES (10003, 'Ana', 'Anić', '03.03.2017.', 'Marija', '38761112233', 'Autizam', 10004);
+
+CREATE TABLE IF NOT EXISTS `diary` (
+                         `child`	INTEGER NOT NULL,
+                         `year`	INTEGER,
+                         `month`	INTEGER,
+                         `day`	INTEGER,
+                         `time`	TEXT,
+                         `activity`	TEXT,
+                         `description`	TEXT,
+);
+INSERT INTO `diary` VALUES (10001, 2020, 8, 12, '11:10', 'Crying', 'Niko was crying because he missed his parents');
+INSERT INTO `diary` VALUES (10001, 2020, 8, 11, '12:20', 'Sleeping', 'Niko was sleeping for two hours, setting his new record');
 COMMIT;
