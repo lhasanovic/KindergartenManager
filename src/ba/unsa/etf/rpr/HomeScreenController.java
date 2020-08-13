@@ -175,7 +175,7 @@ public class HomeScreenController {
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/parent.fxml"));
-			ParentController teacherController = new ParentController(child, child.getTeacher());
+			ParentController teacherController = new ParentController(dao.getDiaryForChild(child));
 			loader.setController(teacherController);
 			root = loader.load();
 			stage.setTitle("Parent Dashboard");
