@@ -51,7 +51,7 @@ public class ViewDiaryController {
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
-			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null);
+			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null, null);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
 			stage.setTitle("Add Diary Entry");
@@ -76,11 +76,15 @@ public class ViewDiaryController {
 		if(child == null)
 			return;
 
+		DiaryEntry diaryEntry = tableViewDiary.getSelectionModel().getSelectedItem();
+		if(diaryEntry == null)
+			return;
+
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
-			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null);
+			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null, diaryEntry);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
 			stage.setTitle("Edit Diary Entry");
@@ -89,10 +93,11 @@ public class ViewDiaryController {
 			stage.show();
 
 			stage.setOnHiding( event -> {
-				DiaryEntry diaryEntry = addDiaryEntryController.getDiaryEntry();
-				if (diaryEntry != null) {
-					child.setActivity(diaryEntry.getActivity());
-					childDiary.getDiary().r
+				DiaryEntry editedDiaryEntry = addDiaryEntryController.getDiaryEntry();
+				if (editedDiaryEntry != null) {
+					child.setActivity(editedDiaryEntry.getActivity());
+					childDiary.getDiary().remove(diaryEntry);
+					childDiary.addDiaryEntry(editedDiaryEntry);
 				}
 			} );
 		} catch (IOException e) {

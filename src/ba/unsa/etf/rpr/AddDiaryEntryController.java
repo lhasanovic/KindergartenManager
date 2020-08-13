@@ -126,6 +126,9 @@ public class AddDiaryEntryController {
 				s.length() != 0 &&
 				s.matches("^[0-9]{1,2}?$");
 
+		if (!matches)
+			return false;
+
 		int hours = parseHourOrMinute(s);
 
 		return matches && hours >= 0 && hours <= 23;
@@ -135,6 +138,9 @@ public class AddDiaryEntryController {
 		boolean matches =  s != null &&
 				s.length() != 0 &&
 				s.matches("^[0-9]{1,2}?$");
+
+		if (!matches)
+			return false;
 
 		int minutes = parseHourOrMinute(s);
 

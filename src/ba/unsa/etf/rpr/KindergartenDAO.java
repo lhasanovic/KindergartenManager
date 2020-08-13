@@ -369,8 +369,6 @@ public class KindergartenDAO {
 			getDiaryForChildStatement.setInt(1, child.getId());
 
 			ResultSet rs = getDiaryForChildStatement.executeQuery();
-			if(!rs.next())
-				return null;
 
 			ArrayList<DiaryEntry> list = new ArrayList<>();
 
