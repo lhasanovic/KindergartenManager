@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -21,15 +22,15 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="welcomeLabel" text="Welcome to Kindergarten App" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+      <Label fx:id="welcomeLabel" text="%welcome" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER">
          <font>
             <Font name="Roboto Light" size="33.0" />
          </font></Label>
-      <Button fx:id="teacherBtn" mnemonicParsing="false" onAction="#actionTeacherBtn" text="Teacher" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <Button fx:id="teacherBtn" mnemonicParsing="false" onAction="#actionTeacherBtn" text="%teacher" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets right="20.0" />
          </GridPane.margin></Button>
-      <Button fx:id="parentBtn" mnemonicParsing="false" onAction="#actionParentBtn" text="Parent" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+      <Button fx:id="parentBtn" mnemonicParsing="false" onAction="#actionParentBtn" text="%parent" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin></Button>
@@ -37,28 +38,46 @@
          <GridPane.margin>
             <Insets bottom="60.0" left="200.0" right="200.0" />
          </GridPane.margin></TextField>
-      <Label fx:id="enterIdLabel" text="Enter your login data:" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+      <Label fx:id="enterIdLabel" text="%enter_your_login_data" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font>
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin></Label>
-      <Label fx:id="teacherOrParentLabel" text="Are you a teacher or a parent?" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+      <Label fx:id="teacherOrParentLabel" text="%teacher_or_parent" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
             <Font size="19.0" />
          </font></Label>
-      <Button fx:id="confirmBtn" onAction="#actionConfirmBtn" text="Confirm" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <Button fx:id="confirmBtn" onAction="#actionConfirmBtn" text="%confirm" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="30.0" />
          </GridPane.margin></Button>
-      <TextField fx:id="nameField" alignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+      <TextField fx:id="nameField" alignment="CENTER" promptText="%enter_your_first_name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="200.0" right="200.0" />
          </GridPane.margin>
          <font>
             <Font name="Roboto Light" size="12.0" />
          </font></TextField>
-      <Button fx:id="adminBtn" mnemonicParsing="false" onAction="#actionAdminBtn" text="Admin" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+      <Button fx:id="adminBtn" mnemonicParsing="false" onAction="#actionAdminBtn" text="Admin" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets right="10.0" top="10.0" />
+         </GridPane.margin></Button>
+      <HBox maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" prefHeight="40.0" prefWidth="150.0" GridPane.valignment="TOP">
+         <children>
+            <RadioButton fx:id="bihRadio" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fx:id="bihImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic></RadioButton>
+            <RadioButton fx:id="ukRadio" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fx:id="ukImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic></RadioButton>
+         </children>
+         <GridPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </GridPane.margin>
+      </HBox>
    </children>
 </GridPane>

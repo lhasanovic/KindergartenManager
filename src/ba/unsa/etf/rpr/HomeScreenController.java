@@ -6,15 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -27,8 +27,13 @@ public class HomeScreenController {
 	public TextField idField;
 	public TextField nameField;
 	public Button confirmBtn;
+	public RadioButton ukRadio;
+	public RadioButton bihRadio;
+	public ImageView ukImage;
+	public ImageView bihImage;
 
 	private KindergartenDAO dao;
+	private ResourceBundle bundle = ResourceBundle.getBundle("Translation");
 
 	public HomeScreenController() {
 		dao = KindergartenDAO.getInstance();
@@ -41,15 +46,32 @@ public class HomeScreenController {
 		confirmBtn.setVisible(false);
 		enterIdLabel.setVisible(false);
 
-		welcomeLabel.setText("Welcome to " + dao.getName());
+		welcomeLabel.setText(welcomeLabel.getText() + " " + dao.getName());
+
+		ToggleGroup language = new ToggleGroup();
+		language.getToggles().add(bihRadio);
+		language.getToggles().add(ukRadio);
+
+		language.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Alert");
+			alert.setHeaderText("Change Language");
+			alert.setContentText("You'll need to reopen the app in order to change the language");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+
+			} else {
+				return;
+			}
+		});
 	}
 
 	public void actionTeacherBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
-		idField.setPromptText("Enter your teacher ID");
+		idField.setPromptText(bundle.getString("enter_your_teacher_id"));
 		nameField.setVisible(true);
-		nameField.setPromptText("Enter your first name");
 		confirmBtn.setVisible(true);
 
 		teacherBtn.setDisable(true);
@@ -62,9 +84,8 @@ public class HomeScreenController {
 	public void actionParentBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
-		idField.setPromptText("Enter your child's ID");
+		idField.setPromptText(bundle.getString("enter_your_child_id"));
 		nameField.setVisible(true);
-		nameField.setPromptText("Enter your first name");
 		confirmBtn.setVisible(true);
 
 		parentBtn.setDisable(true);
@@ -107,27 +128,17 @@ public class HomeScreenController {
 				startAppAsParent(child);
 			}
 		} catch (NumberFormatException e) {
-			String title = "Please enter a valid ID!";
-			String text = "ID is a 5-digit number";
+			String title = bundle.getString("please_enter_valid_id");
+			String text = bundle.getString("id_5_digit_number");
 			notify(title, text);
-		} catch (InvalidTeacherDataException e1) {
+		} catch (InvalidTeacherDataException | InvalidChildDataException e1) {
 			String title = "";
 			String text = "";
 			if(e1.getMessage().equals("Name")) {
-				title = "Please enter your first name!";
+				title = bundle.getString("please_enter_first_name");
 			} else if(e1.getMessage().equals("ID")) {
-				title = "This ID/name combination isn't registered!";
-				text = "Check for possible mistakes";
-			}
-			notify(title, text);
-		} catch (InvalidChildDataException e2) {
-			String title = "";
-			String text = "";
-			if(e2.getMessage().equals("Name")) {
-				title = "Please enter YOUR first name!";
-			} else if(e2.getMessage().equals("ID")) {
-				title = "This ID/parent name combination isn't registered!";
-				text = "Check for possible mistakes";
+				title = bundle.getString("id_name_combination_not_registered");
+				text = bundle.getString("check_for_possible_mistakes");
 			}
 			notify(title, text);
 		}
@@ -162,7 +173,7 @@ public class HomeScreenController {
 			TeacherController teacherController = new TeacherController(dao.getTeacherClass(teacher.getId()));
 			loader.setController(teacherController);
 			root = loader.load();
-			stage.setTitle("Teacher Dashboard");
+			stage.setTitle(bundle.getString("teacher_dashboard"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException | InvalidTeacherDataException e) {
@@ -178,7 +189,7 @@ public class HomeScreenController {
 			ParentController teacherController = new ParentController(dao.getDiaryForChild(child));
 			loader.setController(teacherController);
 			root = loader.load();
-			stage.setTitle("Parent Dashboard");
+			stage.setTitle(bundle.getString("parent_bashboard"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException e) {
@@ -194,7 +205,7 @@ public class HomeScreenController {
 			AdminController adminController = new AdminController();
 			loader.setController(adminController);
 			root = loader.load();
-			stage.setTitle("Admin Panel");
+			stage.setTitle("Admin panel");
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException e) {

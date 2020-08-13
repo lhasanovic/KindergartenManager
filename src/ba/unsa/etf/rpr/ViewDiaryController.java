@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -138,24 +137,27 @@ public class ViewDiaryController {
 	}
 
 	private void filterList(Timeframe timeframe) {
-		ObservableList<DiaryEntry> filteredList = FXCollections.observableList(childDiary.getDiary().stream().filter(de -> {
-			switch (timeframe) {
-				case All_time:
-					return true;
-				case This_year:
-					return de.getTimeDate().getYear() == LocalDate.now().getYear();
-				case Last_30_days:
-					return de.getTimeDate().toLocalDate().plusDays(30).isAfter(LocalDate.now());
-				case Last_7_days:
-					return de.getTimeDate().toLocalDate().plusDays(7).isAfter(LocalDate.now());
-				case Today:
-					return de.getTimeDate().toLocalDate().isEqual(LocalDate.now());
-				default:
-					return false;
-			}
-		}).collect(Collectors.toList()));
+		Thread filterThread = new Thread(() -> {
+			ObservableList<DiaryEntry> filteredList = FXCollections.observableList(childDiary.getDiary().stream().filter(de -> {
+				switch (timeframe) {
+					case All_time:
+						return true;
+					case This_year:
+						return de.getTimeDate().getYear() == LocalDate.now().getYear();
+					case Last_30_days:
+						return de.getTimeDate().toLocalDate().plusDays(30).isAfter(LocalDate.now());
+					case Last_7_days:
+						return de.getTimeDate().toLocalDate().plusDays(7).isAfter(LocalDate.now());
+					case Today:
+						return de.getTimeDate().toLocalDate().isEqual(LocalDate.now());
+					default:
+						return false;
+				}
+			}).collect(Collectors.toList()));
+			tableViewDiary.setItems(filteredList);
+		});
 
-		tableViewDiary.setItems(filteredList);
+		filterThread.start();
 	}
 
 	public ChildDiary getChildDiary() {

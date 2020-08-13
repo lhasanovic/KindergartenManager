@@ -86,6 +86,7 @@ public class KindergartenDAO {
 			adminPassword = node.getChildNode("password").getContent();
 			totalCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
 			maximumClassSize = Integer.parseInt(node.getChildNode("classSize").getContent());
+			Locale.setDefault(new Locale(node.getChildNode("language").getContent()));
 		} catch (IOException | InvalidXMLException e) {
 			e.printStackTrace();
 		}
