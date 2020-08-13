@@ -70,9 +70,9 @@
                <graphic>
                   <ImageView fx:id="bihImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                </graphic></RadioButton>
-            <RadioButton fx:id="ukRadio" mnemonicParsing="false">
+            <RadioButton fx:id="usRadio" mnemonicParsing="false">
                <graphic>
-                  <ImageView fx:id="ukImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="usImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                </graphic></RadioButton>
          </children>
          <GridPane.margin>

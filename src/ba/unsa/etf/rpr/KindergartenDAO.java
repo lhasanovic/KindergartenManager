@@ -86,7 +86,7 @@ public class KindergartenDAO {
 			adminPassword = node.getChildNode("password").getContent();
 			totalCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
 			maximumClassSize = Integer.parseInt(node.getChildNode("classSize").getContent());
-			Locale.setDefault(new Locale(node.getChildNode("language").getContent()));
+			Locale.setDefault(new Locale(node.getChildNode("language").getContent(), node.getChildNode("country").getContent()));
 		} catch (IOException | InvalidXMLException e) {
 			e.printStackTrace();
 		}
@@ -487,6 +487,19 @@ public class KindergartenDAO {
 
 	public String getAdminPassword() {
 		return adminPassword;
+	}
+
+	public void setLanguage(String language) {
+		FileWriter fw = null;
+		try {
+			String content = Files.readString(Path.of("kindergarten.xml"), StandardCharsets.US_ASCII);
+			content = content.replace(Locale.getDefault().getLanguage(), language);
+			fw = new FileWriter("kindergarten.xml");
+			fw.write(content);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getName() { return name; }

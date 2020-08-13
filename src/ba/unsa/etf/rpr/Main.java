@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), bundle);
-        HomeScreenController ctrl = new HomeScreenController();
+        HomeScreenController ctrl = new HomeScreenController(KindergartenDAO.getInstance());
         loader.setController(ctrl);
         Parent root = loader.load();
         primaryStage.setTitle("Kindergarten App");

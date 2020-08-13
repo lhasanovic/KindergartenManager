@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +8,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -27,16 +30,16 @@ public class HomeScreenController {
 	public TextField idField;
 	public TextField nameField;
 	public Button confirmBtn;
-	public RadioButton ukRadio;
+	public RadioButton usRadio;
 	public RadioButton bihRadio;
-	public ImageView ukImage;
+	public ImageView usImage;
 	public ImageView bihImage;
 
 	private KindergartenDAO dao;
 	private ResourceBundle bundle = ResourceBundle.getBundle("Translation");
 
-	public HomeScreenController() {
-		dao = KindergartenDAO.getInstance();
+	public HomeScreenController(KindergartenDAO dao) {
+		this.dao = dao;
 	}
 
 	@FXML
@@ -50,9 +53,20 @@ public class HomeScreenController {
 
 		ToggleGroup language = new ToggleGroup();
 		language.getToggles().add(bihRadio);
-		language.getToggles().add(ukRadio);
+		language.getToggles().add(usRadio);
+
+		if(Locale.getDefault().getLanguage().equals("bs"))
+			language.selectToggle(bihRadio);
+		else if(Locale.getDefault().getLanguage().equals("en"))
+			language.selectToggle(usRadio);
+
+		bihImage.setImage(new Image("/img/bih.png"));
+		usImage.setImage(new Image("/img/us.png"));
 
 		language.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+			if(oldVal.equals(newVal))
+				return;
+
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Alert");
 			alert.setHeaderText("Change Language");
@@ -60,7 +74,11 @@ public class HomeScreenController {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
-
+				if(newVal.equals(bihRadio))
+					dao.setLanguage("bs");
+				else if(newVal.equals(usRadio))
+					dao.setLanguage("en_us");
+				System.exit(0);
 			} else {
 				return;
 			}
