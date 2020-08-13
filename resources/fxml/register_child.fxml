@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@/css/stylesheet.css" />
     </stylesheets>
@@ -22,6 +21,7 @@
         <RowConstraints />
         <RowConstraints />
         <RowConstraints />
+      <RowConstraints />
     </rowConstraints>
     <children>
         <Label text="First name:" />
@@ -33,11 +33,11 @@
         <Label text="Date of birth:" GridPane.rowIndex="3" />
         <DatePicker fx:id="birthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label text="Phone number:" GridPane.rowIndex="4" />
-        <TextField fx:id="phoneNumberField" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="eg. 38761889825"/>
-        <Label text="Teacher:" GridPane.rowIndex="5" />
-        <ChoiceBox fx:id="teacherChoiceBox" GridPane.rowIndex="5" GridPane.columnIndex="1" />
-        <Label text="Special needs:" GridPane.rowIndex="6" />
-        <TextField fx:id="specialNeedsField" GridPane.rowIndex="6" GridPane.columnIndex="1" promptText="Leave empty for none" />
+        <TextField fx:id="phoneNumberField" promptText="eg. 38761889825" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="Teacher:" GridPane.rowIndex="6" />
+        <ChoiceBox fx:id="teacherChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label text="Special needs:" GridPane.rowIndex="5" />
+        <TextField fx:id="specialNeedsField" promptText="Leave empty for none" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
             <buttons>
                 <Button fx:id="okBtn" mnemonicParsing="false" onAction="#actionOk" text="Ok" />

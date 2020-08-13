@@ -131,6 +131,7 @@ public class AdminController {
 				if (child != null) {
 					dao.insertChild(child);
 					teachers.setAll(dao.getTeachers());
+					children.setAll(dao.getChildren());
 				}
 			} );
 		} catch (IOException e) {

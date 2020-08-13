@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class RegisterEditChildController {
 	public TextField firstNameField;
@@ -101,6 +102,17 @@ public class RegisterEditChildController {
 			} else {
 				phoneNumberField.getStyleClass().removeAll("fieldRight");
 				phoneNumberField.getStyleClass().add("fieldWrong");
+			}
+		});
+
+		specialNeedsField.textProperty().addListener((obs, oldVal, newVal) -> {
+			if(!newVal.isEmpty()) {
+				ObservableList<KindergartenTeacher> newTeacherList = FXCollections.observableList(teacherList.stream().filter(c -> c instanceof SpecialNeedsKindergartenTeacher).collect(Collectors.toList()));
+				teacherChoiceBox.setItems(newTeacherList);
+				teacherChoiceBox.getSelectionModel().selectFirst();
+			} else {
+				teacherChoiceBox.setItems(teacherList);
+				teacherChoiceBox.getSelectionModel().selectFirst();
 			}
 		});
 	}

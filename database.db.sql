@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `teachers` (
                                           `special_needs`  TEXT,
                                           PRIMARY KEY(`id`)
 );
-INSERT INTO `teachers` VALUES (10004, 'Adnan', 'Adnanovic', '+38761889825', 'Yes');
+INSERT INTO `teachers` VALUES (10004, 'Adnan', 'Adnanovic', '38761889825', 'Yes');
+INSERT INTO `teachers` VALUES (10005, 'Luka', 'Lukic', '123123123', 'No');
 CREATE TABLE IF NOT EXISTS `children` (
                                           `id`	INTEGER NOT NULL UNIQUE,
                                           `first_name`	TEXT,
