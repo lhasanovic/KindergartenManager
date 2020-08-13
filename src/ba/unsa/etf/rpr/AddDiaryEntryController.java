@@ -56,6 +56,7 @@ public class AddDiaryEntryController {
 			hourField.setText(String.valueOf(diaryEntry.getTimeDate().getHour()));
 			minuteField.setText(String.valueOf(diaryEntry.getTimeDate().getMinute()));
 			childActivityBox.getSelectionModel().select(diaryEntry.getActivity());
+			descriptionArea.setText(diaryEntry.getDescription());
 		} else {
 			diaryDatePicker.setValue(LocalDate.now());
 			hourField.setText("" + LocalDateTime.now().getHour());

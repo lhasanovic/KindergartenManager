@@ -7,12 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -64,6 +67,7 @@ public class ViewDiaryController {
 				if (diaryEntry != null) {
 					child.setActivity(diaryEntry.getActivity());
 					childDiary.addDiaryEntry(diaryEntry);
+					tableViewDiary.setItems(FXCollections.observableArrayList(childDiary.getDiary()));
 				}
 			} );
 		} catch (IOException e) {
@@ -98,6 +102,7 @@ public class ViewDiaryController {
 					child.setActivity(editedDiaryEntry.getActivity());
 					childDiary.getDiary().remove(diaryEntry);
 					childDiary.addDiaryEntry(editedDiaryEntry);
+					tableViewDiary.setItems(FXCollections.observableArrayList(childDiary.getDiary()));
 				}
 			} );
 		} catch (IOException e) {
@@ -106,7 +111,22 @@ public class ViewDiaryController {
 	}
 
 	public void actionDeleteDiaryEntry(ActionEvent actionEvent) {
+		DiaryEntry diaryEntry = tableViewDiary.getSelectionModel().getSelectedItem();
+		if(diaryEntry == null)
+			return;
 
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alert");
+		alert.setHeaderText("Delete the Diary Entry");
+		alert.setContentText("Deleting this diary entry will delete it completely from the database?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			childDiary.getDiary().remove(diaryEntry);
+			tableViewDiary.setItems(FXCollections.observableArrayList(childDiary.getDiary()));
+		} else {
+			return;
+		}
 	}
 
 	public ChildDiary getChildDiary() {

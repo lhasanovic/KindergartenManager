@@ -21,7 +21,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class TeacherController {
 	public TableView<Child> tableViewChildren;
 	public TableColumn colChildId, colChildFirstName, colChildLastName, colChildActivity;
-	public TableColumn<Child, String> colChildBirth;
+	public TableColumn<Child, String> colChildBirth, colChildSpecialNeeds;
 
 	private ObservableList<Child> teacherClass;
 	private KindergartenDAO dao;
@@ -39,6 +39,9 @@ public class TeacherController {
 		colChildLastName.setCellValueFactory(new PropertyValueFactory("lastName"));
 		colChildBirth.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDateOfBirthString()));
 		colChildActivity.setCellValueFactory(new PropertyValueFactory("activity"));
+		colChildSpecialNeeds.setCellValueFactory(data -> new SimpleStringProperty(
+				data.getValue() instanceof SpecialNeedsChild ? "Yes" : "No"
+		));
 	}
 
 	public void actionSetActivity(ActionEvent actionEvent) {
