@@ -1,21 +1,22 @@
 package ba.unsa.etf.rpr;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -25,6 +26,7 @@ public class ViewDiaryController {
 	public TableColumn<DiaryEntry, String> colTime;
 	public TableColumn colChildActivity;
 	public TableColumn colDescription;
+	public ChoiceBox<Timeframe> timeframeBox;
 
 	private ChildDiary childDiary;
 
@@ -43,6 +45,12 @@ public class ViewDiaryController {
 				data.getValue().getTimeDate().getMinute()));
 		colChildActivity.setCellValueFactory(new PropertyValueFactory("activity"));
 		colDescription.setCellValueFactory(new PropertyValueFactory("description"));
+
+		timeframeBox.getItems().setAll(Timeframe.values());
+		timeframeBox.getSelectionModel().select(Timeframe.All_time);
+		timeframeBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+			filterList(newVal);
+		});
 	}
 
 	public void actionAddDiaryEntry(ActionEvent actionEvent) {
@@ -127,6 +135,27 @@ public class ViewDiaryController {
 		} else {
 			return;
 		}
+	}
+
+	private void filterList(Timeframe timeframe) {
+		ObservableList<DiaryEntry> filteredList = FXCollections.observableList(childDiary.getDiary().stream().filter(de -> {
+			switch (timeframe) {
+				case All_time:
+					return true;
+				case This_year:
+					return de.getTimeDate().getYear() == LocalDate.now().getYear();
+				case Last_30_days:
+					return de.getTimeDate().toLocalDate().plusDays(30).isAfter(LocalDate.now());
+				case Last_7_days:
+					return de.getTimeDate().toLocalDate().plusDays(7).isAfter(LocalDate.now());
+				case Today:
+					return de.getTimeDate().toLocalDate().isEqual(LocalDate.now());
+				default:
+					return false;
+			}
+		}).collect(Collectors.toList()));
+
+		tableViewDiary.setItems(filteredList);
 	}
 
 	public ChildDiary getChildDiary() {

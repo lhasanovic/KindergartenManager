@@ -30,9 +30,12 @@
    <top>
       <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Show diary entries from: " />
-            <ChoiceBox prefWidth="150.0" />
+            <Label alignment="CENTER" text="Show diary entries from: " textAlignment="CENTER" />
+            <ChoiceBox fx:id="timeframeBox" prefWidth="150.0" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </top>
 </BorderPane>

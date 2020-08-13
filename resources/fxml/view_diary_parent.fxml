@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,4 +15,15 @@
             </columns>
         </TableView>
     </center>
+    <top>
+        <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" text="Show diary entries from: " textAlignment="CENTER" />
+                <ChoiceBox fx:id="timeframeBox" prefWidth="150.0" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" top="10.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
 </BorderPane>
