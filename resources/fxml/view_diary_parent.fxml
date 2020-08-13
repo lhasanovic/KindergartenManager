@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <TableView fx:id="tableViewDiary" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colDate" prefWidth="60.0" text="Date" />
+                <TableColumn fx:id="colTime" prefWidth="60.0" text="Time" />
+                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="Activity" />
+                <TableColumn fx:id="colDescription" prefWidth="350" text="Description" />
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
