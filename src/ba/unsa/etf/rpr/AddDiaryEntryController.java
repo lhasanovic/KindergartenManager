@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,9 @@ import org.controlsfx.control.Notifications;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class AddDiaryEntryController {
 	public ChoiceBox<Child> childBox;
@@ -27,24 +31,37 @@ public class AddDiaryEntryController {
 	private ObservableList<Child> children;
 	private DiaryEntry diaryEntry;
 
-	public AddDiaryEntryController(Child child, ObservableList<Child> children) {
+	public AddDiaryEntryController(Child child, ObservableList<Child> children, DiaryEntry diaryEntry) {
 		if(child == null)
 			this.child = children.get(0);
 		else
 			this.child = child;
 
 		this.children = children;
+		this.diaryEntry = diaryEntry;
 	}
 
 	@FXML
 	public void initialize() {
-		childBox.setItems(children);
+		if(children != null)
+			childBox.setItems(children);
+		else
+			childBox.setItems(FXCollections.observableArrayList(Collections.singletonList(child)));
+
 		childBox.getSelectionModel().select(child);
-		diaryDatePicker.setValue(LocalDate.now());
-		hourField.setText("" + LocalDateTime.now().getHour());
-		minuteField.setText("" + LocalDateTime.now().getMinute());
 		childActivityBox.getItems().setAll(ChildActivity.values());
-		childActivityBox.getSelectionModel().select(child.getActivity());
+
+		if(diaryEntry != null) {
+			diaryDatePicker.setValue(diaryEntry.getTimeDate().toLocalDate());
+			hourField.setText(String.valueOf(diaryEntry.getTimeDate().getHour()));
+			minuteField.setText(String.valueOf(diaryEntry.getTimeDate().getMinute()));
+			childActivityBox.getSelectionModel().select(diaryEntry.getActivity());
+		} else {
+			diaryDatePicker.setValue(LocalDate.now());
+			hourField.setText("" + LocalDateTime.now().getHour());
+			minuteField.setText("" + LocalDateTime.now().getMinute());
+			childActivityBox.getSelectionModel().select(child.getActivity());
+		}
 
 		hourField.textProperty().addListener((obs, oldVal, newVal) -> {
 			if(matchesHourFormat(newVal)) {

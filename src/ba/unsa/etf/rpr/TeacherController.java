@@ -79,7 +79,7 @@ public class TeacherController {
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
-			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, teacherClass);
+			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, teacherClass, null);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
 			stage.setTitle("Add Diary Entry");
