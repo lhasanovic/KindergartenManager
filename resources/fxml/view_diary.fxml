@@ -18,13 +18,21 @@
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="addDiaryEntryBtn" onAction="#actionAddDiaryEntry" mnemonicParsing="false" prefWidth="Infinity" text="Add diary entry" />
-                <Button fx:id="editDiaryEntryBtn" onAction="#actionEditDiaryEntry" mnemonicParsing="false"  prefWidth="Infinity" text="Edit diary entry" />
-                <Button fx:id="deleteDiaryEntryBtn" onAction="#actionDeleteDiaryEntry" mnemonicParsing="false" prefWidth="Infinity" text="Delete diary entry" />
+                <Button fx:id="addDiaryEntryBtn" mnemonicParsing="false" onAction="#actionAddDiaryEntry" prefWidth="Infinity" text="Add diary entry" />
+                <Button fx:id="editDiaryEntryBtn" mnemonicParsing="false" onAction="#actionEditDiaryEntry" prefWidth="Infinity" text="Edit diary entry" />
+                <Button fx:id="deleteDiaryEntryBtn" mnemonicParsing="false" onAction="#actionDeleteDiaryEntry" prefWidth="Infinity" text="Delete diary entry" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </VBox>
     </right>
+   <top>
+      <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Show diary entries from: " />
+            <ChoiceBox prefWidth="150.0" />
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
