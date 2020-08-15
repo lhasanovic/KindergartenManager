@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -40,7 +41,8 @@ public class TeacherController {
 		colChildBirth.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDateOfBirthString()));
 		colChildActivity.setCellValueFactory(new PropertyValueFactory("activity"));
 		colChildSpecialNeeds.setCellValueFactory(data -> new SimpleStringProperty(
-				data.getValue() instanceof SpecialNeedsChild ? "Yes" : "No"
+				data.getValue() instanceof SpecialNeedsChild ? dao.getBundle().getString("yes") :
+						dao.getBundle().getString("no")
 		));
 	}
 
@@ -56,7 +58,7 @@ public class TeacherController {
 			SetActivityController setActivityController = new SetActivityController(child);
 			loader.setController(setActivityController);
 			root = loader.load();
-			stage.setTitle("Change Activity");
+			stage.setTitle(dao.getBundle().getString("change_activity"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -80,12 +82,13 @@ public class TeacherController {
 
 		Stage stage = new Stage();
 		Parent root = null;
+
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"), dao.getBundle());
 			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, teacherClass, null);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
-			stage.setTitle("Add Diary Entry");
+			stage.setTitle(dao.getBundle().getString("add_diary_entry"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -111,11 +114,11 @@ public class TeacherController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/view_diary.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/view_diary.fxml"), dao.getBundle());
 			ViewDiaryController viewDiaryController = new ViewDiaryController(dao.getDiaryForChild(child));
 			loader.setController(viewDiaryController);
 			root = loader.load();
-			stage.setTitle("View Diary");
+			stage.setTitle(dao.getBundle().getString("view_diary"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();

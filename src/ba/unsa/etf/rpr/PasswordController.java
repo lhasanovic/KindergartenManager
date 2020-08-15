@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+import java.util.ResourceBundle;
+
 public class PasswordController {
 	public PasswordField oldPasswordField;
 	public PasswordField newPasswordField;
@@ -21,16 +23,16 @@ public class PasswordController {
 
 	public void actionOk(ActionEvent actionEvent) {
 		if(!oldPasswordField.getText().equals(currentPassword)) {
-			String title = "Old password incorrect!";
+			String title = ResourceBundle.getBundle("Translate").getString("old_password_incorrect");
 			String text = "";
 			notify(title, text);
 		} else if(newPasswordField.getText().length() < 8) {
-			String title = "New password too short!";
-			String text = "Password must contain at least 8 characters";
+			String title = ResourceBundle.getBundle("Translate").getString("new_password_too_short");
+			String text = ResourceBundle.getBundle("Translate").getString("password_8_characters");
 			notify(title, text);
 		} else if(newPasswordField.getText().length() > 16) {
-			String title = "New password too long";
-			String text = "Password should contain no more than 16 characters";
+			String title = ResourceBundle.getBundle("Translate").getString("new_password_too_long");
+			String text = ResourceBundle.getBundle("Translate").getString("password_16_characters");
 			notify(title, text);
 		} else {
 			newPassword = newPasswordField.getText();

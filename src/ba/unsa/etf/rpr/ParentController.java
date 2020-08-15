@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -30,7 +31,8 @@ public class ParentController {
 	@FXML
 	public void initialize() {
 		activityImg.setImage(new Image("/img/" + childDiary.getChild().getActivity().toString() + ".jpg"));
-		activityLabel.setText("Your child is currently " + childDiary.getChild().getActivity().toString().toLowerCase());
+		activityLabel.setText(ResourceBundle.getBundle("Translate").getString("current_activity") + " " +
+				childDiary.getChild().getActivity().toString().toLowerCase());
 		teacherFirstNameLabel.setText(childDiary.getChild().getTeacher().getFirstName());
 		teacherLastNameLabel.setText(childDiary.getChild().getTeacher().getLastName());
 		teacherPhoneNumberLabel.setText(childDiary.getChild().getTeacher().getPhoneNumber());
@@ -44,7 +46,7 @@ public class ParentController {
 			ViewDiaryController viewDiaryController = new ViewDiaryController(childDiary);
 			loader.setController(viewDiaryController);
 			root = loader.load();
-			stage.setTitle("View Diary");
+			stage.setTitle(ResourceBundle.getBundle("Translate").getString("view_diary"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();

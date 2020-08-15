@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import java.net.URL?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@/css/stylesheet.css" />
     </stylesheets>
     <center>
         <TableView fx:id="teacherTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="Teacher ID" />
-                <TableColumn fx:id="colTeacherFirstName" prefWidth="100.0" text="First Name" />
-                <TableColumn fx:id="colTeacherLastName" prefWidth="90.0" text="Last Name" />
-                <TableColumn fx:id="colTeacherPhone" prefWidth="100.0" text="Phone" />
-                <TableColumn fx:id="colClassSize" prefWidth="100" text="Class Size" />
+                <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="%teacher_id" />
+                <TableColumn fx:id="colTeacherFirstName" prefWidth="100.0" text="%first_name" />
+                <TableColumn fx:id="colTeacherLastName" prefWidth="90.0" text="%last_name" />
+                <TableColumn fx:id="colTeacherPhone" prefWidth="100.0" text="%phone" />
+                <TableColumn fx:id="colClassSize" prefWidth="100" text="%class_size" />
             </columns>
         </TableView>
     </center>
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="hireTeacherBtn" mnemonicParsing="false" onAction="#actionHireTeacher" prefWidth="Infinity" text="Hire a teacher" />
-                <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="Fire teacher" />
-                <Button fx:id="editTeacherBtn" mnemonicParsing="false" onAction="#actionEditTeacher" prefWidth="Infinity" text="Edit teacher" />
-                <Button fx:id="registerChildBtn" mnemonicParsing="false" onAction="#actionRegisterChild" prefWidth="Infinity" text="Register a child" />
-            <Button fx:id="editChildBtn" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#actionEditChild" prefWidth="Infinity" text="Edit child" />
-            <Button fx:id="deleteChildBtn" layoutX="15.0" layoutY="135.0" mnemonicParsing="false" onAction="#actionDeleteChild" prefWidth="Infinity" text="Delete child" />
-                <Button fx:id="changePasswordBtn" mnemonicParsing="false" onAction="#actionChangePassword" prefWidth="Infinity" text="Change password">
+                <Button fx:id="hireTeacherBtn" mnemonicParsing="false" onAction="#actionHireTeacher" prefWidth="Infinity" text="%hire_a_teacher" />
+                <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="%fire_teacher" />
+                <Button fx:id="editTeacherBtn" mnemonicParsing="false" onAction="#actionEditTeacher" prefWidth="Infinity" text="%edit_teacher" />
+                <Button fx:id="registerChildBtn" mnemonicParsing="false" onAction="#actionRegisterChild" prefWidth="Infinity" text="%register_a_child" />
+            <Button fx:id="editChildBtn" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#actionEditChild" prefWidth="Infinity" text="%edit_child" />
+            <Button fx:id="deleteChildBtn" layoutX="15.0" layoutY="135.0" mnemonicParsing="false" onAction="#actionDeleteChild" prefWidth="Infinity" text="%delete_child" />
+                <Button fx:id="changePasswordBtn" mnemonicParsing="false" onAction="#actionChangePassword" prefWidth="Infinity" text="%change_password">
                <font>
                   <Font size="11.0" />
                </font></Button>
@@ -44,12 +43,12 @@
    <bottom>
        <TableView fx:id="childrenTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
            <columns>
-               <TableColumn fx:id="colChildId" prefWidth="70.0" text="Child ID" />
-               <TableColumn fx:id="colChildFirstName" prefWidth="100.0" text="First Name" />
-               <TableColumn fx:id="colChildLastName" prefWidth="90.0" text="Last Name" />
-               <TableColumn fx:id="colChildParentName" prefWidth="100.0" text="Parent Name" />
-               <TableColumn fx:id="colChildBirth" prefWidth="100.0" text="Date of Birth" />
-               <TableColumn fx:id="colChildTeacher" prefWidth="100.0" text="Teacher" />
+               <TableColumn fx:id="colChildId" prefWidth="70.0" text="%child_id" />
+               <TableColumn fx:id="colChildFirstName" prefWidth="100.0" text="%first_name" />
+               <TableColumn fx:id="colChildLastName" prefWidth="90.0" text="%last_name" />
+               <TableColumn fx:id="colChildParentName" prefWidth="100.0" text="%parent_name" />
+               <TableColumn fx:id="colChildBirth" prefWidth="100.0" text="%date_of_birth" />
+               <TableColumn fx:id="colChildTeacher" prefWidth="100.0" text="%teacher" />
            </columns>
        </TableView>
    </bottom>

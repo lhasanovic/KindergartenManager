@@ -6,16 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         KindergartenDAO dao = KindergartenDAO.getInstance();
-        ResourceBundle bundle = ResourceBundle.getBundle("Translate", Locale.getDefault());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), bundle);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), dao.getBundle());
         HomeScreenController ctrl = new HomeScreenController(dao);
         loader.setController(ctrl);
         Parent root = loader.load();

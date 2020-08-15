@@ -9,20 +9,20 @@
         <TableView fx:id="tableViewChildren" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="colChildId" prefWidth="40.0" text="ID" />
-                <TableColumn fx:id="colChildFirstName" prefWidth="100.0" text="First Name" />
-                <TableColumn fx:id="colChildLastName" prefWidth="90.0" text="Last Name" />
-                <TableColumn fx:id="colChildBirth" prefWidth="100.0" text="Date of Birth" />
-                <TableColumn fx:id="colChildSpecialNeeds" prefWidth="40" text="S.N." />
-                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="Activity" />
+                <TableColumn fx:id="colChildFirstName" prefWidth="100.0" text="%first_name" />
+                <TableColumn fx:id="colChildLastName" prefWidth="90.0" text="%last_name" />
+                <TableColumn fx:id="colChildBirth" prefWidth="100.0" text="%date_of_birth" />
+                <TableColumn fx:id="colChildSpecialNeeds" prefWidth="40" text="%sn" />
+                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="%activity" />
             </columns>
         </TableView>
     </center>
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="setActivityBtn" onAction="#actionSetActivity" mnemonicParsing="false" prefWidth="Infinity" text="Change activity" />
-                <Button fx:id="addDiaryEntryBtn" onAction="#actionAddDiaryEntry" mnemonicParsing="false" prefWidth="Infinity" text="Add diary entry" />
-                <Button fx:id="viewDiaryBtn" onAction="#actionViewDiary" mnemonicParsing="false"  prefWidth="Infinity" text="View diary" />
+                <Button fx:id="setActivityBtn" mnemonicParsing="false" onAction="#actionSetActivity" prefWidth="Infinity" text="%change_activity" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="addDiaryEntryBtn" mnemonicParsing="false" onAction="#actionAddDiaryEntry" prefWidth="Infinity" text="%add_diary_entry" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="viewDiaryBtn" mnemonicParsing="false" onAction="#actionViewDiary" prefWidth="Infinity" text="%view_diary" textAlignment="CENTER" wrapText="true" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

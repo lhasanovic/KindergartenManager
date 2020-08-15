@@ -71,11 +71,11 @@ public class AdminController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"), dao.getBundle());
 			HireEditTeacherController hireEditTeacherController = new HireEditTeacherController(null);
 			loader.setController(hireEditTeacherController);
 			root = loader.load();
-			stage.setTitle("Hire a Teacher");
+			stage.setTitle(dao.getBundle().getString("hire_a_teacher"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -99,9 +99,9 @@ public class AdminController {
 			return;
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Alert");
-		alert.setHeaderText("Fire the Teacher");
-		alert.setContentText("Firing this teacher will delete it completely from the database?");
+		alert.setTitle(dao.getBundle().getString("alert"));
+		alert.setHeaderText(dao.getBundle().getString("fire_teacher"));
+		alert.setContentText(dao.getBundle().getString("firing_this_teacher"));
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
@@ -117,11 +117,11 @@ public class AdminController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"), dao.getBundle());
 			RegisterEditChildController registerEditChildController = new RegisterEditChildController(null, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
 			loader.setController(registerEditChildController);
 			root = loader.load();
-			stage.setTitle("Register a Child");
+			stage.setTitle(dao.getBundle().getString("register_a_child"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -146,11 +146,11 @@ public class AdminController {
 			Child child = childrenTableView.getSelectionModel().getSelectedItem();
 			if(child == null)
 				return;
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_child.fxml"), dao.getBundle());
 			RegisterEditChildController registerEditChildController = new RegisterEditChildController(child, (ArrayList<KindergartenTeacher>) dao.getAvailableTeachers());
 			loader.setController(registerEditChildController);
 			root = loader.load();
-			stage.setTitle("Edit Child");
+			stage.setTitle(dao.getBundle().getString("edit_child"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -175,11 +175,11 @@ public class AdminController {
 		if(teacher == null)
 			return;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hire_teacher.fxml"), dao.getBundle());
 			HireEditTeacherController hireEditTeacherController = new HireEditTeacherController(teacher);
 			loader.setController(hireEditTeacherController);
 			root = loader.load();
-			stage.setTitle("Edit Teacher");
+			stage.setTitle(dao.getBundle().getString("edit_teacher"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -202,11 +202,11 @@ public class AdminController {
 		Parent root = null;
 		try {
 			String currentPassword = dao.getAdminPassword();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/change_password.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/change_password.fxml"), dao.getBundle());
 			PasswordController passwordController = new PasswordController(currentPassword);
 			loader.setController(passwordController);
 			root = loader.load();
-			stage.setTitle("Change Password");
+			stage.setTitle(dao.getBundle().getString("change_password"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 
@@ -227,9 +227,9 @@ public class AdminController {
 			return;
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Alert");
-		alert.setHeaderText("Delete the Child");
-		alert.setContentText("Deleting this child will delete it completely from the database?");
+		alert.setTitle(dao.getBundle().getString("alert"));
+		alert.setHeaderText(dao.getBundle().getString("delete_child"));
+		alert.setContentText(dao.getBundle().getString("deleting_this_child"));
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){

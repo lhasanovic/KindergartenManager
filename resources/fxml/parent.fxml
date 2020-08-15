@@ -22,13 +22,13 @@
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin></Label>
-      <Button fx:id="viewDiaryBtn" mnemonicParsing="false" onAction="#actionViewDiary" text="View diary" GridPane.columnIndex="1" />
+      <Button fx:id="viewDiaryBtn" mnemonicParsing="false" onAction="#actionViewDiary" text="%view_diary" GridPane.columnIndex="1" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Label text="Teacher info:" />
-            <Label fx:id="teacherFirstNameLabel" text="First name" />
-            <Label fx:id="teacherLastNameLabel" text="Last name" />
-            <Label fx:id="teacherPhoneNumberLabel" text="Phone number" />
+            <Label text="%teacher_info" />
+            <Label fx:id="teacherFirstNameLabel" text="%first_name" />
+            <Label fx:id="teacherLastNameLabel" text="last_name" />
+            <Label fx:id="teacherPhoneNumberLabel" text="phone_number" />
          </children>
       </VBox>
    </children>

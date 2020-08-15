@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
@@ -60,11 +61,11 @@ public class ViewDiaryController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"), ResourceBundle.getBundle("Translate"));
 			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null, null);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
-			stage.setTitle("Add Diary Entry");
+			stage.setTitle(ResourceBundle.getBundle("Translate").getString("add_diary_entry"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -94,11 +95,11 @@ public class ViewDiaryController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_diary_entry.fxml"), ResourceBundle.getBundle("Translate"));
 			AddDiaryEntryController addDiaryEntryController = new AddDiaryEntryController(child, null, diaryEntry);
 			loader.setController(addDiaryEntryController);
 			root = loader.load();
-			stage.setTitle("Edit Diary Entry");
+			stage.setTitle(ResourceBundle.getBundle("Translate").getString("edit_diary_entry"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
 			stage.show();
@@ -123,9 +124,9 @@ public class ViewDiaryController {
 			return;
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Alert");
-		alert.setHeaderText("Delete the Diary Entry");
-		alert.setContentText("Deleting this diary entry will delete it completely from the database?");
+		alert.setTitle(ResourceBundle.getBundle("Translate").getString("alert"));
+		alert.setHeaderText(ResourceBundle.getBundle("Translate").getString("delete_diary_entry"));
+		alert.setContentText(ResourceBundle.getBundle("Translate").getString("deleting_this_diary_entry"));
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){

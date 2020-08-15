@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
+import java.util.ResourceBundle;
+
 public class HireEditTeacherController {
 	public TextField firstNameField;
 	public TextField lastNameField;
@@ -82,7 +84,7 @@ public class HireEditTeacherController {
 			if(teacher != null)
 				oldId = teacher.getId();
 
-			if(specialNeeds.getSelectedToggle().toString().equals("No"))
+			if(specialNeeds.getSelectedToggle().toString().equals(ResourceBundle.getBundle("Translate").getString("no")))
 				teacher = new KindergartenTeacher();
 			else
 				teacher = new SpecialNeedsKindergartenTeacher();

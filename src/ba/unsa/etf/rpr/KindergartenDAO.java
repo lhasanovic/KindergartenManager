@@ -29,6 +29,8 @@ public class KindergartenDAO {
 	private PreparedStatement insertTeacherStatement, getTeacherStatement, findTeacherStatement, deleteTeacherStatement, editTeacherStatement, getTeachersStatement, getNextTeacherIdStatement, getTeacherClassStatement;
 	private PreparedStatement insertDiaryEntryStatement, getDiaryForChildStatement, deleteDiaryForChildStatement;
 
+	private ResourceBundle bundle;
+
 	public static KindergartenDAO getInstance() {
 		if (instance == null) instance = new KindergartenDAO();
 		return instance;
@@ -36,6 +38,7 @@ public class KindergartenDAO {
 
 	private KindergartenDAO() {
 		loadInfoFromXML();
+		bundle = ResourceBundle.getBundle("Translate", Locale.getDefault());
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:database.db");
 		} catch (SQLException e) {
@@ -506,5 +509,9 @@ public class KindergartenDAO {
 	public String getName() { return name; }
 
 	public int getTotalCapacity() { return totalCapacity; }
+
 	public int getMaximumClassSize() { return maximumClassSize; }
+
+	public ResourceBundle getBundle() { return bundle; }
+
 }

@@ -36,7 +36,6 @@ public class HomeScreenController {
 	public ImageView bihImage;
 
 	private KindergartenDAO dao;
-	private ResourceBundle bundle = ResourceBundle.getBundle("Translate", Locale.getDefault());
 
 	public HomeScreenController(KindergartenDAO dao) {
 		this.dao = dao;
@@ -68,9 +67,9 @@ public class HomeScreenController {
 				return;
 
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Alert");
-			alert.setHeaderText("Change Language");
-			alert.setContentText("You'll need to reopen the app in order to change the language");
+			alert.setTitle(dao.getBundle().getString("alert"));
+			alert.setHeaderText(dao.getBundle().getString("change_language"));
+			alert.setContentText(dao.getBundle().getString("reopen_the_app"));
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
@@ -88,7 +87,7 @@ public class HomeScreenController {
 	public void actionTeacherBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
-		idField.setPromptText(bundle.getString("enter_your_teacher_id"));
+		idField.setPromptText(dao.getBundle().getString("enter_your_teacher_id"));
 		nameField.setVisible(true);
 		confirmBtn.setVisible(true);
 
@@ -102,7 +101,7 @@ public class HomeScreenController {
 	public void actionParentBtn(ActionEvent actionEvent) {
 		teacherOrParentLabel.setVisible(false);
 		idField.setVisible(true);
-		idField.setPromptText(bundle.getString("enter_your_child_id"));
+		idField.setPromptText(dao.getBundle().getString("enter_your_child_id"));
 		nameField.setVisible(true);
 		confirmBtn.setVisible(true);
 
@@ -146,17 +145,17 @@ public class HomeScreenController {
 				startAppAsParent(child);
 			}
 		} catch (NumberFormatException e) {
-			String title = bundle.getString("please_enter_valid_id");
-			String text = bundle.getString("id_5_digit_number");
+			String title = dao.getBundle().getString("please_enter_valid_id");
+			String text = dao.getBundle().getString("id_5_digit_number");
 			notify(title, text);
 		} catch (InvalidTeacherDataException | InvalidChildDataException e1) {
 			String title = "";
 			String text = "";
 			if(e1.getMessage().equals("Name")) {
-				title = bundle.getString("please_enter_first_name");
+				title = dao.getBundle().getString("please_enter_first_name");
 			} else if(e1.getMessage().equals("ID")) {
-				title = bundle.getString("id_name_combination_not_registered");
-				text = bundle.getString("check_for_possible_mistakes");
+				title = dao.getBundle().getString("id_name_combination_not_registered");
+				text = dao.getBundle().getString("check_for_possible_mistakes");
 			}
 			notify(title, text);
 		}
@@ -187,11 +186,11 @@ public class HomeScreenController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teacher.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teacher.fxml"), dao.getBundle());
 			TeacherController teacherController = new TeacherController(dao.getTeacherClass(teacher.getId()));
 			loader.setController(teacherController);
 			root = loader.load();
-			stage.setTitle(bundle.getString("teacher_dashboard"));
+			stage.setTitle(dao.getBundle().getString("teacher_dashboard"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException | InvalidTeacherDataException e) {
@@ -203,11 +202,11 @@ public class HomeScreenController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/parent.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/parent.fxml"), dao.getBundle());
 			ParentController teacherController = new ParentController(dao.getDiaryForChild(child));
 			loader.setController(teacherController);
 			root = loader.load();
-			stage.setTitle(bundle.getString("parent_dashboard"));
+			stage.setTitle(dao.getBundle().getString("parent_dashboard"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException e) {
@@ -219,7 +218,7 @@ public class HomeScreenController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"), dao.getBundle());
 			AdminController adminController = new AdminController();
 			loader.setController(adminController);
 			root = loader.load();

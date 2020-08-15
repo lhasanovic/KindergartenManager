@@ -8,19 +8,19 @@
     <center>
         <TableView fx:id="tableViewDiary" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="colDate" prefWidth="60.0" text="Date" />
-                <TableColumn fx:id="colTime" prefWidth="60.0" text="Time" />
-                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="Activity" />
-                <TableColumn fx:id="colDescription" prefWidth="250" text="Description" />
+                <TableColumn fx:id="colDate" prefWidth="60.0" text="%date" />
+                <TableColumn fx:id="colTime" prefWidth="60.0" text="%time" />
+                <TableColumn fx:id="colChildActivity" prefWidth="100.0" text="%activity" />
+                <TableColumn fx:id="colDescription" prefWidth="250" text="%description" />
             </columns>
         </TableView>
     </center>
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="addDiaryEntryBtn" mnemonicParsing="false" onAction="#actionAddDiaryEntry" prefWidth="Infinity" text="Add diary entry" />
-                <Button fx:id="editDiaryEntryBtn" mnemonicParsing="false" onAction="#actionEditDiaryEntry" prefWidth="Infinity" text="Edit diary entry" />
-                <Button fx:id="deleteDiaryEntryBtn" mnemonicParsing="false" onAction="#actionDeleteDiaryEntry" prefWidth="Infinity" text="Delete diary entry" />
+                <Button fx:id="addDiaryEntryBtn" mnemonicParsing="false" onAction="#actionAddDiaryEntry" prefWidth="Infinity" text="%add_diary_entry" />
+                <Button fx:id="editDiaryEntryBtn" mnemonicParsing="false" onAction="#actionEditDiaryEntry" prefWidth="Infinity" text="%edit_diary_entry" />
+                <Button fx:id="deleteDiaryEntryBtn" mnemonicParsing="false" onAction="#actionDeleteDiaryEntry" prefWidth="Infinity" text="%delete_diary_entry" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -30,7 +30,10 @@
    <top>
       <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" text="Show diary entries from: " textAlignment="CENTER" />
+            <Label alignment="CENTER" text="%show_entries_from" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Label>
             <ChoiceBox fx:id="timeframeBox" prefWidth="150.0" />
          </children>
          <BorderPane.margin>

@@ -6,6 +6,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.util.ResourceBundle;
+
 public class SetActivityController {
 	public Label childLabel;
 	public ChoiceBox<ChildActivity> chooseActivityBox;
@@ -20,7 +22,7 @@ public class SetActivityController {
 	public void initialize() {
 		chooseActivityBox.getItems().setAll(ChildActivity.values());
 		chooseActivityBox.getSelectionModel().selectFirst();
-		childLabel.setText(child.getFirstName() + " new activity:");
+		childLabel.setText(child.getFirstName() + " - " + ResourceBundle.getBundle("Translate").getString("new_activity"));
 	}
 
 	public void actionOk(ActionEvent actionEvent) {
