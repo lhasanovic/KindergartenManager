@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class AddDiaryEntryController {
 	public ChoiceBox<Child> childBox;
@@ -28,6 +30,7 @@ public class AddDiaryEntryController {
 	private Child child;
 	private ObservableList<Child> children;
 	private DiaryEntry diaryEntry;
+	private ResourceBundle bundle = ResourceBundle.getBundle("Translate", Locale.getDefault());
 
 	public AddDiaryEntryController(Child child, ObservableList<Child> children, DiaryEntry diaryEntry) {
 		if(child == null)
@@ -96,12 +99,12 @@ public class AddDiaryEntryController {
 	public void actionOk(ActionEvent actionEvent) {
 		if(allGood()) {
 			if(diaryDatePicker.getValue().isAfter(LocalDate.now())) {
-				String title = "Invalid date!";
-				String text = "Date can't be in the future";
+				String title = bundle.getString("invalid_date");
+				String text = bundle.getString("date_future");
 				notify(title, text);
 			} else if(diaryDatePicker.getValue().isBefore(child.getDateOfBirth())) {
-				String title = "Invalid date!";
-				String text = "Date can't be older than the child!";
+				String title = bundle.getString("invalid_date");
+				String text = bundle.getString("date_older_child");
 				notify(title, text);
 			} else {
 				LocalDateTime localDateTime = LocalDateTime.of(diaryDatePicker.getValue(), LocalTime.of(parseHourOrMinute(hourField.getText()), parseHourOrMinute(minuteField.getText())));

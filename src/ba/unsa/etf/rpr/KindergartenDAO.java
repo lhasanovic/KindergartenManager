@@ -489,11 +489,12 @@ public class KindergartenDAO {
 		return adminPassword;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(String language, String country) {
 		FileWriter fw = null;
 		try {
 			String content = Files.readString(Path.of("kindergarten.xml"), StandardCharsets.US_ASCII);
-			content = content.replace(Locale.getDefault().getLanguage(), language);
+			content = content.replace("<language>" + Locale.getDefault().getLanguage(), "<language>" + language).
+					replace("<country>" + Locale.getDefault().getCountry(), "<country>" + country);
 			fw = new FileWriter("kindergarten.xml");
 			fw.write(content);
 			fw.close();

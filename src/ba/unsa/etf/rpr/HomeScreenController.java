@@ -36,7 +36,7 @@ public class HomeScreenController {
 	public ImageView bihImage;
 
 	private KindergartenDAO dao;
-	private ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+	private ResourceBundle bundle = ResourceBundle.getBundle("Translate", Locale.getDefault());
 
 	public HomeScreenController(KindergartenDAO dao) {
 		this.dao = dao;
@@ -75,9 +75,9 @@ public class HomeScreenController {
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
 				if(newVal.equals(bihRadio))
-					dao.setLanguage("bs");
+					dao.setLanguage("bs", "BA");
 				else if(newVal.equals(usRadio))
-					dao.setLanguage("en_us");
+					dao.setLanguage("en", "US");
 				System.exit(0);
 			} else {
 				return;
@@ -207,7 +207,7 @@ public class HomeScreenController {
 			ParentController teacherController = new ParentController(dao.getDiaryForChild(child));
 			loader.setController(teacherController);
 			root = loader.load();
-			stage.setTitle(bundle.getString("parent_bashboard"));
+			stage.setTitle(bundle.getString("parent_dashboard"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException e) {

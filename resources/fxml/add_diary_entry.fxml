@@ -24,19 +24,19 @@
       <RowConstraints />
     </rowConstraints>
     <children>
-        <Label text="Child" />
+        <Label text="%child" />
         <ChoiceBox fx:id="childBox" GridPane.columnIndex="1" />
-        <Label text="Date:" GridPane.rowIndex="1" />
+        <Label text="%date" GridPane.rowIndex="1" />
         <DatePicker fx:id="diaryDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Label text="Time:" GridPane.rowIndex="2" />
-        <Label text="Activity:" GridPane.rowIndex="3" />
+        <Label text="%time" GridPane.rowIndex="2" />
+        <Label text="%activity" GridPane.rowIndex="3" />
         <ChoiceBox fx:id="childActivityBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Label text="Description:" GridPane.rowIndex="4" />
-        <TextArea fx:id="descriptionArea" prefHeight="67.0" prefWidth="174.0" promptText="Short description (optional)" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="%description" GridPane.rowIndex="4" />
+        <TextArea fx:id="descriptionArea" prefHeight="67.0" prefWidth="174.0" promptText="%short_description_optional" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
             <buttons>
-                <Button fx:id="okBtn" mnemonicParsing="false" onAction="#actionOk" text="Ok" />
-                <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" />
+                <Button fx:id="okBtn" mnemonicParsing="false" onAction="#actionOk" text="OK" />
+                <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#actionCancel" text="%cancel" />
             </buttons>
         </ButtonBar>
       <HBox prefHeight="23.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
