@@ -13,22 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 
+import java.util.ResourceBundle;
+
 public class PasswordDialog extends Dialog<String> {
 	private PasswordField passwordField;
 	private Label errorLabel;
 
 	public PasswordDialog() {
-		setTitle("Admin Password");
-		setHeaderText("Please enter the admin password.");
+		setTitle(ResourceBundle.getBundle("Translate").getString("admin_password"));
+		setHeaderText(ResourceBundle.getBundle("Translate").getString("please_enter_admin_password"));
 
-		ButtonType passwordButtonType = new ButtonType("Confirm", ButtonData.OK_DONE);
+		ButtonType passwordButtonType = new ButtonType(ResourceBundle.getBundle("Translate").getString("confirm"), ButtonData.OK_DONE);
 		getDialogPane().getButtonTypes().addAll(passwordButtonType, ButtonType.CANCEL);
 
 		passwordField = new PasswordField();
-		passwordField.setPromptText("Password");
+		passwordField.setPromptText(ResourceBundle.getBundle("Translate").getString("password"));
 
 		errorLabel = new Label();
-		errorLabel.setText("The password is not correct!");
+		errorLabel.setText(ResourceBundle.getBundle("Translate").getString("password_incorrect"));
 		errorLabel.setTextFill(Color.RED);
 		errorLabel.setVisible(false);
 

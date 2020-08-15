@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ import org.controlsfx.control.Notifications;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -60,7 +58,11 @@ public class HomeScreenController {
 			language.selectToggle(usRadio);
 
 		bihImage.setImage(new Image("/img/bih.png"));
+		bihImage.setFitHeight(40);
+		bihImage.setFitWidth(40);
 		usImage.setImage(new Image("/img/us.png"));
+		usImage.setFitWidth(40);
+		usImage.setFitWidth(40);
 
 		language.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
 			if(oldVal.equals(newVal))
