@@ -34,6 +34,11 @@
                <font>
                   <Font size="11.0" />
                </font></Button>
+            <Button fx:id="viewReportBtn" layoutX="15.0" layoutY="195.0" mnemonicParsing="false" onAction="#actionViewReport" prefWidth="Infinity" text="%view_report_teacher" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

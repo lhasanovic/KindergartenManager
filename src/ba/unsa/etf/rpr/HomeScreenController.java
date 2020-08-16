@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -185,7 +186,7 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsTeacher(KindergartenTeacher teacher) {
-		Stage stage = new Stage();
+		Stage stage = (Stage) welcomeLabel.getScene().getWindow();
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teacher.fxml"), dao.getBundle());
@@ -201,7 +202,7 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsParent(Child child) {
-		Stage stage = new Stage();
+		Stage stage = (Stage) welcomeLabel.getScene().getWindow();
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/parent.fxml"), dao.getBundle());
@@ -217,7 +218,7 @@ public class HomeScreenController {
 	}
 
 	private void startAppAsAdmin() {
-		Stage stage = new Stage();
+		Stage stage = (Stage) welcomeLabel.getScene().getWindow();
 		Parent root = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"), dao.getBundle());

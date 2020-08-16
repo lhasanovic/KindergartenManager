@@ -513,4 +513,6 @@ public class KindergartenDAO {
 	public int getMaximumClassSize() { return maximumClassSize; }
 
 	public ResourceBundle getBundle() { return bundle; }
+
+	public Connection getConn() { return conn; }
 }

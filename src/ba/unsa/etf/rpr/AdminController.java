@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -250,5 +251,14 @@ public class AdminController {
 		} else {
 			return;
 		}
+	}
+
+	public void actionViewReport(ActionEvent actionEvent) {
+		try {
+			new PrintReport().showReport(dao.getConn());
+		} catch (JRException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 }
