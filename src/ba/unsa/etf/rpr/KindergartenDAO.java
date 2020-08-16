@@ -359,7 +359,7 @@ public class KindergartenDAO {
 			insertDiaryEntryStatement.setInt(4, entry.getTimeDate().getDayOfMonth());
 			insertDiaryEntryStatement.setString(5, "" + entry.getTimeDate().getHour() + ":" +
 					entry.getTimeDate().getMinute());
-			insertDiaryEntryStatement.setString(6, entry.getActivity().toString());
+			insertDiaryEntryStatement.setString(6, ChildActivity.getEnumName(entry.getActivity()));
 			insertDiaryEntryStatement.setString(7, entry.getDescription());
 
 			insertDiaryEntryStatement.executeUpdate();
@@ -387,7 +387,7 @@ public class KindergartenDAO {
 				DiaryEntry entry = null;
 
 				for(ChildActivity ca : ChildActivity.values()) {
-					if(ca.toString().equals(rs.getString(6))) {
+					if(ChildActivity.valueOf(rs.getString(6)) == ca) {
 						entry = new DiaryEntry(timeDate, ca);
 						break;
 					}
@@ -513,5 +513,4 @@ public class KindergartenDAO {
 	public int getMaximumClassSize() { return maximumClassSize; }
 
 	public ResourceBundle getBundle() { return bundle; }
-
 }

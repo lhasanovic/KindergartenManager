@@ -41,6 +41,17 @@ public class ViewDiaryController {
 					data.getValue().getTimeDate().getMonthValue() + "." +
 					data.getValue().getTimeDate().getYear())
 		);
+		colDate.setComparator((s1, s2) -> {
+			String[] dateSplit1 = s1.split("\\.");
+			String[] dateSplit2 = s2.split("\\.");
+
+			if(!dateSplit1[2].equals(dateSplit2[2]))
+				return Integer.compare(Integer.parseInt(dateSplit1[2]), Integer.parseInt(dateSplit2[2]));
+			else if(!dateSplit1[1].equals(dateSplit2[1]))
+				return Integer.compare(Integer.parseInt(dateSplit1[1]), Integer.parseInt(dateSplit2[1]));
+			else
+				return Integer.compare(Integer.parseInt(dateSplit1[0]), Integer.parseInt(dateSplit2[0]));
+		});
 		colTime.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeDate().getHour() + ":" +
 				data.getValue().getTimeDate().getMinute()));
 		colChildActivity.setCellValueFactory(new PropertyValueFactory("activity"));

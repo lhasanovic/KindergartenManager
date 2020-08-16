@@ -14,6 +14,9 @@ public class ChildDiary {
 	public ChildDiary(Child child, ArrayList<DiaryEntry> diary) {
 		this.child = child;
 		this.diary = diary;
+
+		if(this.diary == null)
+			this.diary = new ArrayList<>();
 	}
 
 	public Child getChild() {

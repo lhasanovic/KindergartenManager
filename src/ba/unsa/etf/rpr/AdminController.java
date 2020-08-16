@@ -61,6 +61,17 @@ public class AdminController {
 		colChildFirstName.setCellValueFactory(new PropertyValueFactory("firstName"));
 		colChildLastName.setCellValueFactory(new PropertyValueFactory("lastName"));
 		colChildBirth.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDateOfBirthString()));
+		colChildBirth.setComparator((s1, s2) -> {
+			String[] dateSplit1 = s1.split("\\.");
+			String[] dateSplit2 = s2.split("\\.");
+
+			if(!dateSplit1[2].equals(dateSplit2[2]))
+				return Integer.compare(Integer.parseInt(dateSplit1[2]), Integer.parseInt(dateSplit2[2]));
+			else if(!dateSplit1[1].equals(dateSplit2[1]))
+				return Integer.compare(Integer.parseInt(dateSplit1[1]), Integer.parseInt(dateSplit2[1]));
+			else
+				return Integer.compare(Integer.parseInt(dateSplit1[0]), Integer.parseInt(dateSplit2[0]));
+		});
 		colChildParentName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getParent().getFirstName()));
 		colChildTeacher.setCellValueFactory(data ->
 				new SimpleStringProperty(data.getValue().getTeacher().getFirstName() + " " +

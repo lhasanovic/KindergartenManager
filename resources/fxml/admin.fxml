@@ -24,13 +24,13 @@
     <right>
         <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="hireTeacherBtn" mnemonicParsing="false" onAction="#actionHireTeacher" prefWidth="Infinity" text="%hire_a_teacher" />
-                <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="%fire_teacher" />
-                <Button fx:id="editTeacherBtn" mnemonicParsing="false" onAction="#actionEditTeacher" prefWidth="Infinity" text="%edit_teacher" />
-                <Button fx:id="registerChildBtn" mnemonicParsing="false" onAction="#actionRegisterChild" prefWidth="Infinity" text="%register_a_child" />
-            <Button fx:id="editChildBtn" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#actionEditChild" prefWidth="Infinity" text="%edit_child" />
-            <Button fx:id="deleteChildBtn" layoutX="15.0" layoutY="135.0" mnemonicParsing="false" onAction="#actionDeleteChild" prefWidth="Infinity" text="%delete_child" />
-                <Button fx:id="changePasswordBtn" mnemonicParsing="false" onAction="#actionChangePassword" prefWidth="Infinity" text="%change_password">
+                <Button fx:id="hireTeacherBtn" mnemonicParsing="false" onAction="#actionHireTeacher" prefWidth="Infinity" text="%hire_a_teacher" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="%fire_teacher" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="editTeacherBtn" mnemonicParsing="false" onAction="#actionEditTeacher" prefWidth="Infinity" text="%edit_teacher" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="registerChildBtn" mnemonicParsing="false" onAction="#actionRegisterChild" prefWidth="Infinity" text="%register_a_child" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="editChildBtn" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#actionEditChild" prefWidth="Infinity" text="%edit_child" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="deleteChildBtn" layoutX="15.0" layoutY="135.0" mnemonicParsing="false" onAction="#actionDeleteChild" prefWidth="Infinity" text="%delete_child" textAlignment="CENTER" wrapText="true" />
+                <Button fx:id="changePasswordBtn" mnemonicParsing="false" onAction="#actionChangePassword" prefWidth="Infinity" text="%change_password" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="11.0" />
                </font></Button>

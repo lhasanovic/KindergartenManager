@@ -50,5 +50,28 @@ public enum ChildActivity {
 		public String toString() {
 			return ResourceBundle.getBundle("Translate").getString("not_present");
 		}
+	};
+
+	public static String getEnumName(ChildActivity ca) {
+		switch (ca) {
+			case Sleeping:
+				return "Sleeping";
+			case Crying:
+				return "Crying";
+			case Eating:
+				return "Eating";
+			case Playing:
+				return "Playing";
+			case Problem:
+				return "Problem";
+			case Not_present:
+				return "Not_present";
+			case Group_activity:
+				return "Group_activity";
+			case Ready_to_pickup:
+				return "Ready_to_pickup";
+			default:
+				return "";
+		}
 	}
 }
