@@ -4,13 +4,13 @@ import com.github.tsijercic1.InvalidXMLException;
 import com.github.tsijercic1.Node;
 import com.github.tsijercic1.XMLParser;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -83,13 +83,19 @@ public class KindergartenDAO {
 
 	private void loadInfoFromXML() {
 		try {
-			XMLParser xmlParser = new XMLParser("kindergarten.xml");
-			Node node = xmlParser.getDocumentRootNode();
-			name = node.getChildNode("name").getContent();
+			XMLParser editables = new XMLParser("editables.xml");
+			Node node = editables.getDocumentRootNode();
 			adminPassword = node.getChildNode("password").getContent();
-			totalCapacity = Integer.parseInt(node.getChildNode("capacity").getContent());
-			maximumClassSize = Integer.parseInt(node.getChildNode("classSize").getContent());
 			Locale.setDefault(new Locale(node.getChildNode("language").getContent(), node.getChildNode("country").getContent()));
+
+			downloadNonEditables();
+
+			XMLParser nonEditables = new XMLParser("non_editables.xml");
+			Node newNode = nonEditables.getDocumentRootNode();
+			name = newNode.getChildNode("name").getContent();
+			totalCapacity = Integer.parseInt(newNode.getChildNode("capacity").getContent());
+			maximumClassSize = Integer.parseInt(newNode.getChildNode("classSize").getContent());
+
 		} catch (IOException | InvalidXMLException e) {
 			e.printStackTrace();
 		}
@@ -476,9 +482,9 @@ public class KindergartenDAO {
 	public void setAdminPassword(String newPassword) {
 		FileWriter fw = null;
 		try {
-			String content = Files.readString(Path.of("kindergarten.xml"), StandardCharsets.US_ASCII);
+			String content = Files.readString(Path.of("editables.xml"), StandardCharsets.US_ASCII);
 			content = content.replace(adminPassword, newPassword);
-			fw = new FileWriter("kindergarten.xml");
+			fw = new FileWriter("editables.xml");
 			fw.write(content);
 			fw.close();
 
@@ -495,12 +501,21 @@ public class KindergartenDAO {
 	public void setLanguage(String language, String country) {
 		FileWriter fw = null;
 		try {
-			String content = Files.readString(Path.of("kindergarten.xml"), StandardCharsets.US_ASCII);
+			String content = Files.readString(Path.of("editables.xml"), StandardCharsets.US_ASCII);
 			content = content.replace("<language>" + Locale.getDefault().getLanguage(), "<language>" + language).
 					replace("<country>" + Locale.getDefault().getCountry(), "<country>" + country);
-			fw = new FileWriter("kindergarten.xml");
+			fw = new FileWriter("editables.xml");
 			fw.write(content);
 			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void downloadNonEditables() {
+		try {
+			InputStream in = new URL("https://srv-file22.gofile.io/download/yHxTur/non_editables.xml").openStream();
+			Files.copy(in, Paths.get("non_editables.xml"), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
