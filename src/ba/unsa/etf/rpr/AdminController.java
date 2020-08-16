@@ -255,10 +255,18 @@ public class AdminController {
 
 	public void actionViewReport(ActionEvent actionEvent) {
 		try {
-			new PrintReport().showReport(dao.getConn());
-		} catch (JRException e1) {
-			e1.printStackTrace();
+			new PrintReport().showReport(dao.getConn(), "Kindergarten");
+		} catch (JRException e) {
+			e.printStackTrace();
 		}
 
+	}
+
+	public void actionViewReportChildren(ActionEvent actionEvent) {
+		try {
+			new PrintReport().showReport(dao.getConn(), "KindergartenChildren");
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
 	}
 }
