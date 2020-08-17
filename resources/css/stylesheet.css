@@ -4,3 +4,43 @@
 .fieldWrong {
     -fx-control-inner-background: lightpink;
 }
+
+.root {
+    -fx-background-color: azure;
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 12pt;
+}
+
+.button {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 9pt;
+    -fx-background-color:
+            #000000,
+            linear-gradient(#7ebcea, #2f4b8f),
+            linear-gradient(#426ab7, #263e75),
+            linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 5 5 5 5;
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 10pt;
+}
+
+.text-area {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 10pt;
+}
+
+.table-view {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 9pt;
+}
+
+.cell {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 9pt;
+}
