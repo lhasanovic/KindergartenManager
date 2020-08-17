@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.ImageView?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@/css/stylesheet.css" />
@@ -62,4 +63,14 @@
            </columns>
        </TableView>
    </bottom>
+    <top>
+        <Button id="home_button" fx:id="homeBtn" mnemonicParsing="false" onAction="#actionHome" prefHeight="30.0" prefWidth="30.0" BorderPane.alignment="TOP_LEFT">
+            <graphic>
+                <ImageView fx:id="homeImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            </graphic>
+            <BorderPane.margin>
+                <Insets bottom="12.0" left="12.0" top="12.0" />
+            </BorderPane.margin>
+        </Button>
+    </top>
 </BorderPane>

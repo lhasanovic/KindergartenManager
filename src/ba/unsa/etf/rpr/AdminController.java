@@ -13,6 +13,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 
@@ -30,6 +32,8 @@ public class AdminController {
 	public TableView<Child> childrenTableView;
 	public TableColumn colChildId, colChildFirstName, colChildLastName;
 	public TableColumn<Child, String> colChildBirth, colChildParentName, colChildTeacher;
+
+	public ImageView homeImg;
 
 	private KindergartenDAO dao;
 	private ObservableList<KindergartenTeacher> teachers;
@@ -77,6 +81,8 @@ public class AdminController {
 		colChildTeacher.setCellValueFactory(data ->
 				new SimpleStringProperty(data.getValue().getTeacher().getFirstName() + " " +
 				data.getValue().getTeacher().getLastName()));
+
+		homeImg.setImage(new Image("/img/home_small.png"));
 	}
 
 	public void actionHireTeacher(ActionEvent actionEvent) {
@@ -266,6 +272,22 @@ public class AdminController {
 		try {
 			new PrintReport().showReport(dao.getConn(), "KindergartenChildren");
 		} catch (JRException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actionHome(ActionEvent actionEvent) {
+		Stage stage = (Stage) homeImg.getScene().getWindow();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), dao.getBundle());
+			HomeScreenController homeScreenController = new HomeScreenController(dao);
+			loader.setController(homeScreenController);
+			root = loader.load();
+			stage.setTitle("Kindergarten App");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.show();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

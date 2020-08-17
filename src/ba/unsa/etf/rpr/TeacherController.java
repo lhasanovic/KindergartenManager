@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class TeacherController {
 	public TableView<Child> tableViewChildren;
 	public TableColumn colChildId, colChildFirstName, colChildLastName, colChildActivity;
 	public TableColumn<Child, String> colChildBirth, colChildSpecialNeeds;
+	public ImageView homeImg;
 
 	private ObservableList<Child> teacherClass;
 	private KindergartenDAO dao;
@@ -55,6 +58,7 @@ public class TeacherController {
 				data.getValue() instanceof SpecialNeedsChild ? dao.getBundle().getString("yes") :
 						dao.getBundle().getString("no")
 		));
+		homeImg.setImage(new Image("/img/home_small.png"));
 	}
 
 	public void actionSetActivity(ActionEvent actionEvent) {
@@ -143,6 +147,22 @@ public class TeacherController {
 					tableViewChildren.refresh();
 				}
 			} );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actionHome(ActionEvent actionEvent) {
+		Stage stage = (Stage) homeImg.getScene().getWindow();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), dao.getBundle());
+			HomeScreenController homeScreenController = new HomeScreenController(dao);
+			loader.setController(homeScreenController);
+			root = loader.load();
+			stage.setTitle("Kindergarten App");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

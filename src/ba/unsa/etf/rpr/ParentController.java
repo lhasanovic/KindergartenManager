@@ -19,6 +19,7 @@ public class ParentController {
 	private ChildDiary childDiary;
 
 	public ImageView activityImg;
+	public ImageView homeImg;
 	public Label activityLabel;
 	public Label teacherFirstNameLabel;
 	public Label teacherLastNameLabel;
@@ -30,7 +31,8 @@ public class ParentController {
 
 	@FXML
 	public void initialize() {
-		activityImg.setImage(new Image("/img/" + childDiary.getChild().getActivity().toString() + ".jpg"));
+		activityImg.setImage(new Image("/img/" + ChildActivity.getEnumName(childDiary.getChild().getActivity()) + ".jpg"));
+		homeImg.setImage(new Image("/img/home.png"));
 		activityLabel.setText(ResourceBundle.getBundle("Translate").getString("current_activity") + " " +
 				childDiary.getChild().getActivity().toString().toLowerCase());
 		teacherFirstNameLabel.setText(childDiary.getChild().getTeacher().getFirstName());
@@ -49,6 +51,22 @@ public class ParentController {
 			stage.setTitle(ResourceBundle.getBundle("Translate").getString("view_diary"));
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actionHome(ActionEvent actionEvent) {
+		Stage stage = (Stage) homeImg.getScene().getWindow();
+		Parent root = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), ResourceBundle.getBundle("Translate"));
+			HomeScreenController homeScreenController = new HomeScreenController(KindergartenDAO.getInstance());
+			loader.setController(homeScreenController);
+			root = loader.load();
+			stage.setTitle("Kindergarten App");
+			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
