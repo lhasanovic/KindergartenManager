@@ -65,14 +65,20 @@
          </GridPane.margin></Button>
       <HBox maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" prefHeight="40.0" prefWidth="150.0" GridPane.valignment="TOP">
          <children>
-            <RadioButton fx:id="bihRadio" mnemonicParsing="false">
+            <RadioButton fx:id="bihRadio" mnemonicParsing="false" text="  ">
                <graphic>
-                  <ImageView fx:id="bihImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic></RadioButton>
-            <RadioButton fx:id="usRadio" mnemonicParsing="false">
+                  <ImageView fx:id="bihImage" fitHeight="40.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+               <padding>
+                  <Insets right="10.0" />
+               </padding></RadioButton>
+            <RadioButton fx:id="usRadio" mnemonicParsing="false" text="  ">
                <graphic>
-                  <ImageView fx:id="usImage" fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic></RadioButton>
+                  <ImageView fx:id="usImage" fitHeight="40.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+               <padding>
+                  <Insets right="10.0" />
+               </padding></RadioButton>
          </children>
          <GridPane.margin>
             <Insets left="10.0" top="10.0" />

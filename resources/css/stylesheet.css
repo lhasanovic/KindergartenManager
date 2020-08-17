@@ -48,3 +48,7 @@
 #home_button {
     -fx-background-radius: 200px;
 }
+
+#teacher_info {
+    -fx-text-fill: white;
+}

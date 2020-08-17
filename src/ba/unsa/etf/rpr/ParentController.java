@@ -24,6 +24,7 @@ public class ParentController {
 	public Label teacherFirstNameLabel;
 	public Label teacherLastNameLabel;
 	public Label teacherPhoneNumberLabel;
+	public Label kgNameLabel;
 
 	public ParentController(ChildDiary childDiary) {
 		this.childDiary = childDiary;
@@ -33,11 +34,11 @@ public class ParentController {
 	public void initialize() {
 		activityImg.setImage(new Image("/img/" + ChildActivity.getEnumName(childDiary.getChild().getActivity()) + ".jpg"));
 		homeImg.setImage(new Image("/img/home.png"));
-		activityLabel.setText(ResourceBundle.getBundle("Translate").getString("current_activity") + " " +
-				childDiary.getChild().getActivity().toString().toLowerCase());
+		activityLabel.setText(childDiary.getChild().getActivity().toString().toLowerCase());
 		teacherFirstNameLabel.setText(childDiary.getChild().getTeacher().getFirstName());
 		teacherLastNameLabel.setText(childDiary.getChild().getTeacher().getLastName());
 		teacherPhoneNumberLabel.setText(childDiary.getChild().getTeacher().getPhoneNumber());
+		kgNameLabel.setText(KindergartenDAO.getInstance().getName());
 	}
 
 	public void actionViewDiary(ActionEvent actionEvent) {
