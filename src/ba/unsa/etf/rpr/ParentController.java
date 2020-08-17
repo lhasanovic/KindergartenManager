@@ -45,7 +45,7 @@ public class ParentController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/view_diary_parent.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/view_diary_parent.fxml"), ResourceBundle.getBundle("Translate"));
 			ViewDiaryController viewDiaryController = new ViewDiaryController(childDiary);
 			loader.setController(viewDiaryController);
 			root = loader.load();

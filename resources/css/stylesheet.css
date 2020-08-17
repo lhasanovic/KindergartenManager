@@ -45,6 +45,11 @@
     -fx-font-size: 9pt;
 }
 
+.choice-box {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 9pt;
+}
+
 #home_button {
     -fx-background-radius: 200px;
 }

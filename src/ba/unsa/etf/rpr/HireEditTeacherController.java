@@ -84,7 +84,8 @@ public class HireEditTeacherController {
 			if(teacher != null)
 				oldId = teacher.getId();
 
-			if(specialNeeds.getSelectedToggle().toString().equals(ResourceBundle.getBundle("Translate").getString("no")))
+			RadioButton selected = (RadioButton)specialNeeds.getSelectedToggle();
+			if((selected.getText().equals(ResourceBundle.getBundle("Translate").getString("no"))))
 				teacher = new KindergartenTeacher();
 			else
 				teacher = new SpecialNeedsKindergartenTeacher();

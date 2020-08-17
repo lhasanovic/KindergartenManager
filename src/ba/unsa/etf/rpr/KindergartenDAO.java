@@ -243,7 +243,7 @@ public class KindergartenDAO {
 
 	public void insertTeacher(KindergartenTeacher teacher) {
 		try {
-			int id = getNextChildId();
+			int id = getNextTeacherId();
 
 			insertTeacherStatement.setInt(1, id);
 			insertTeacherStatement.setString(2, teacher.getFirstName());
