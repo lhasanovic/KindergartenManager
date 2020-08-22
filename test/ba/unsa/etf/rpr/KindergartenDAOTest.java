@@ -25,6 +25,27 @@ class KindergartenDAOTest {
 	}
 
 	@Test
+	void xmlInfo() {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		KindergartenDAO dao = KindergartenDAO.getInstance();
+
+		assertEquals("Lamija's Kindergarten", dao.getName());
+		assertEquals("11112222", dao.getAdminPassword());
+		assertEquals(50, dao.getTotalCapacity());
+		assertEquals(10, dao.getMaximumClassSize());
+
+		dao.setAdminPassword("22221111");
+		KindergartenDAO.removeInstance();
+		dbfile = new File("database.db");
+		dbfile.delete();
+		dao = KindergartenDAO.getInstance();
+
+		assertEquals("22221111", dao.getAdminPassword());
+	}
+
+	@Test
 	void deleteTeacher() {
 		KindergartenDAO.removeInstance();
 		File dbfile = new File("database.db");
@@ -48,13 +69,13 @@ class KindergartenDAOTest {
 		KindergartenDAO dao = KindergartenDAO.getInstance();
 
 		ArrayList<KindergartenTeacher> teachers = dao.getTeachers();
-		KindergartenTeacher teacher = teachers.get(0);
-		assertEquals("Adnan", teacher.getFirstName());
+		KindergartenTeacher teacher = teachers.get(1);
+		assertEquals("Luka", teacher.getFirstName());
 		dao.deleteTeacher(teacher);
 
 		ArrayList<Child> children = dao.getChildren();
 		for(Child c : children)
-			assertEquals("Luka", c.getTeacher().getFirstName());
+			assertEquals("Adnan", c.getTeacher().getFirstName());
 	}
 
 	@Test
@@ -139,5 +160,38 @@ class KindergartenDAOTest {
 		assertEquals(newChild.toString(), child.toString());
 		assertEquals(newChild.getTeacher().getFirstName(), teacher.getFirstName());
 		assertEquals(newTeacher.getPhoneNumber(), teacher.getPhoneNumber());
+	}
+
+	@Test
+	void diary() {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		KindergartenDAO dao = KindergartenDAO.getInstance();
+
+		ChildDiary diary = dao.getDiaryForChild(dao.getChild(10001));
+		assertEquals(2, diary.getDiary().size());
+	}
+
+	@Test
+	void diary2() {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		KindergartenDAO dao = KindergartenDAO.getInstance();
+
+		DiaryEntry diaryEntry = new DiaryEntry();
+		diaryEntry.setTimeDate(LocalDateTime.now());
+		diaryEntry.setActivity(ChildActivity.Crying);
+		diaryEntry.setDescription("Test");
+
+		Child child = dao.getChild(10002);
+		dao.insertDiaryEntry(child, diaryEntry);
+
+		ChildDiary diary = dao.getDiaryForChild(child);
+		assertEquals("Test", diary.getDiary().get(0).getDescription());
+
+		dao.deleteDiaryForChild(child);
+		assertEquals(0, dao.getDiaryForChild(child).getDiary().size());
 	}
 }

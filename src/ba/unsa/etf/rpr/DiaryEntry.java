@@ -7,6 +7,8 @@ public class DiaryEntry {
 	private ChildActivity activity;
 	private String description;
 
+	public DiaryEntry() {}
+
 	public DiaryEntry(LocalDateTime timeDate, ChildActivity activity, String description) {
 		this.timeDate = timeDate;
 		this.activity = activity;

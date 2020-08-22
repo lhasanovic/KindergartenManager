@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `children` (
                                           FOREIGN KEY(`teacher`) REFERENCES `teachers`
 );
 INSERT INTO `children` VALUES (10001, 'Niko', 'Nikić', '01.01.2017', 'Ivan', '38761123456', 'None', 10004);
-INSERT INTO `children` VALUES (10002, 'Mujo', 'Mujić', '02.02.2017', 'Ahmed', '38761111222', 'None', 10004);
+INSERT INTO `children` VALUES (10002, 'Mujo', 'Mujić', '02.02.2017', 'Ahmed', '38761111222', 'None', 10005);
 INSERT INTO `children` VALUES (10003, 'Ana', 'Anić', '03.03.2017.', 'Marija', '38761112233', 'Autizam', 10004);
 CREATE TABLE IF NOT EXISTS `diary` (
                          `child`	INTEGER NOT NULL,
