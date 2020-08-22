@@ -263,9 +263,23 @@ public class KindergartenDAO {
 
 	public void deleteTeacher(KindergartenTeacher teacher) {
 		try {
+			ArrayList<Child> teacherClass = getTeacherClass(teacher.getId());
 			deleteTeacherStatement.setInt(1, teacher.getId());
 			deleteTeacherStatement.executeUpdate();
-		} catch (SQLException e) {
+
+			int i;
+
+			for(i = 0; i < teacherClass.size(); i++) {
+				for(KindergartenTeacher k : getAvailableTeachers()) {
+					if(teacherClass.get(i) instanceof SpecialNeedsChild && ! (k instanceof SpecialNeedsKindergartenTeacher))
+						continue;
+					teacherClass.get(i).setTeacher(k);
+					editChild(teacherClass.get(i));
+					break;
+				}
+			}
+
+		} catch (SQLException | InvalidTeacherDataException e) {
 			e.printStackTrace();
 		}
 	}
@@ -437,9 +451,9 @@ public class KindergartenDAO {
 
 	private KindergartenTeacher getTeacherFromResultSet(ResultSet rs) throws SQLException {
 		if(rs.getString(5).equals("Yes"))
-			return new KindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
-		else
 			return new SpecialNeedsKindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+		else
+			return new KindergartenTeacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
 	}
 
 	public static void removeInstance() {
