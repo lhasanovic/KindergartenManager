@@ -43,6 +43,8 @@ class KindergartenDAOTest {
 		dao = KindergartenDAO.getInstance();
 
 		assertEquals("22221111", dao.getAdminPassword());
+
+		dao.setAdminPassword("11112222");
 	}
 
 	@Test
