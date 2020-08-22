@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -290,5 +291,12 @@ public class AdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void resetDatabase() {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		dao = KindergartenDAO.getInstance();
 	}
 }

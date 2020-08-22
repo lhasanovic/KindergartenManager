@@ -35,7 +35,6 @@ public class RegisterEditChildController {
 	@FXML
 	public void initialize() {
 		teacherChoiceBox.setItems(teacherList);
-		birthDatePicker.setEditable(false);
 
 		if(child != null) {
 			firstNameField.setText(child.getFirstName());
