@@ -12,7 +12,6 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
