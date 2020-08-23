@@ -15,7 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
@@ -68,7 +70,7 @@ public class TeacherController {
 		Stage stage = new Stage();
 		Parent root = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/set_activity.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/set_activity.fxml"), dao.getBundle());
 			SetActivityController setActivityController = new SetActivityController(child);
 			loader.setController(setActivityController);
 			root = loader.load();
@@ -81,6 +83,7 @@ public class TeacherController {
 				Child editedChild = setActivityController.getChild();
 				if (editedChild != null) {
 					child.setActivity(editedChild.getActivity());
+					dao.insertDiaryEntry(child, new DiaryEntry(LocalDateTime.now(), child.getActivity(), ""));
 					tableViewChildren.refresh();
 				}
 			} );
@@ -165,5 +168,12 @@ public class TeacherController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void resetDatabase() {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		dao = KindergartenDAO.getInstance();
 	}
 }
