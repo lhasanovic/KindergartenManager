@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ChildDiary {
 	private Child child;
@@ -37,5 +38,9 @@ public class ChildDiary {
 
 	public void addDiaryEntry(DiaryEntry entry) {
 		diary.add(entry);
+	}
+
+	public DiaryEntry getLatestDiaryEntry() {
+		return diary.stream().max(Comparator.comparing(DiaryEntry::getTimeDate)).get();
 	}
 }

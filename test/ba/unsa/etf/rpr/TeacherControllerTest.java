@@ -12,6 +12,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import java.io.File;
 import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
@@ -24,6 +25,9 @@ class TeacherControllerTest {
 
 	@Start
 	public void start (Stage stage) throws Exception {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
 		KindergartenDAO dao = KindergartenDAO.getInstance();
 		KindergartenTeacher teacher = dao.getTeacher(10004);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teacher.fxml"), ResourceBundle.getBundle("Translate"));
@@ -73,7 +77,8 @@ class TeacherControllerTest {
 
 		robot.clickOn("Niko");
 		robot.clickOn("#addDiaryEntryBtn");
-		robot.lookup("#childBox").tryQuery().isPresent();
+
+		while(!robot.lookup("#childActivityBox").tryQuery().isPresent());
 
 		robot.clickOn("#childActivityBox");
 		robot.clickOn("Eating");
@@ -111,6 +116,7 @@ class TeacherControllerTest {
 		robot.write("Testing");
 
 		robot.clickOn("#okBtn");
+		robot.sleep(300);
 		robot.clickOn("Group activity");
 
 		TableView<DiaryEntry> tableView = robot.lookup("#tableViewDiary").queryAs(TableView.class);
@@ -136,7 +142,21 @@ class TeacherControllerTest {
 		Button okButton = (Button) dialogPane.lookupButton(ButtonType.OK);
 		robot.clickOn(okButton);
 
+		while(!robot.lookup("#tableViewDiary").tryQuery().isPresent());
+
 		TableView tableView = robot.lookup("#tableViewDiary").queryAs(TableView.class);
 		assertEquals(1, tableView.getItems().size());
+
+		robot.clickOn("#addDiaryEntryBtn");
+		robot.lookup("#childBox").tryQuery().isPresent();
+
+		robot.clickOn("#childActivityBox");
+		robot.clickOn("Eating");
+
+		robot.clickOn("#descriptionArea");
+		robot.write("Testing");
+
+		robot.clickOn("#okBtn");
+		assertEquals(2, tableView.getItems().size());
 	}
 }

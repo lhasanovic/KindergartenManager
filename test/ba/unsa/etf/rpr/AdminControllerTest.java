@@ -12,6 +12,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,10 @@ class AdminControllerTest {
 
 	@Start
 	public void start (Stage stage) throws Exception {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
+		KindergartenDAO dao = KindergartenDAO.getInstance();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"), ResourceBundle.getBundle("Translate"));
 		ctrl = new AdminController();
 		ctrl.resetDatabase();

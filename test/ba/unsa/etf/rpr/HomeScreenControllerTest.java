@@ -22,6 +22,9 @@ class HomeScreenControllerTest {
 
 	@Start
 	public void start (Stage stage) throws Exception {
+		KindergartenDAO.removeInstance();
+		File dbfile = new File("database.db");
+		dbfile.delete();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_screen.fxml"), ResourceBundle.getBundle("Translate"));
 		ctrl = new HomeScreenController(KindergartenDAO.getInstance());
 		loader.setController(ctrl);

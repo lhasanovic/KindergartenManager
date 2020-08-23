@@ -32,9 +32,14 @@ public class ParentController {
 
 	@FXML
 	public void initialize() {
-		activityImg.setImage(new Image("/img/" + ChildActivity.getEnumName(childDiary.getChild().getActivity()) + ".jpg"));
+		if(childDiary.getDiary().isEmpty()) {
+			activityImg.setImage(new Image("/img/" + ChildActivity.getEnumName(ChildActivity.Not_present) + ".jpg"));
+			activityLabel.setText("No recent activity");
+		} else {
+			activityImg.setImage(new Image("/img/" + ChildActivity.getEnumName(childDiary.getLatestDiaryEntry().getActivity()) + ".jpg"));
+			activityLabel.setText(childDiary.getLatestDiaryEntry().getActivity().toString().toLowerCase());
+		}
 		homeImg.setImage(new Image("/img/home.png"));
-		activityLabel.setText(childDiary.getChild().getActivity().toString().toLowerCase());
 		teacherFirstNameLabel.setText(childDiary.getChild().getTeacher().getFirstName());
 		teacherLastNameLabel.setText(childDiary.getChild().getTeacher().getLastName());
 		teacherPhoneNumberLabel.setText(childDiary.getChild().getTeacher().getPhoneNumber());
