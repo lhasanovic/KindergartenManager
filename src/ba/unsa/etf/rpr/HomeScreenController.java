@@ -4,16 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
@@ -33,6 +37,7 @@ public class HomeScreenController {
 	public RadioButton bihRadio;
 	public ImageView usImage;
 	public ImageView bihImage;
+	public ImageView helpImage;
 
 	private KindergartenDAO dao;
 
@@ -64,6 +69,7 @@ public class HomeScreenController {
 		usImage.setImage(new Image("/img/us.png"));
 		usImage.setFitWidth(40);
 		usImage.setFitWidth(40);
+		helpImage.setImage(new Image("/img/question-mark-32.png"));
 
 		language.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
 			if(oldVal.equals(newVal))
@@ -228,6 +234,20 @@ public class HomeScreenController {
 			stage.setTitle("Admin panel");
 			stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actionHelp(ActionEvent actionEvent) {
+		File helpFile;
+		if(bihRadio.isSelected())
+			helpFile = new File(getClass().getResource("/help/Help_bs/Help.html").getFile());
+		else
+			helpFile = new File(getClass().getResource("/help/Help_en/Help.html").getFile());
+
+		try {
+			Desktop.getDesktop().open(helpFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

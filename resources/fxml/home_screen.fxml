@@ -33,6 +33,13 @@
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin></Button>
+      <TextField fx:id="nameField" alignment="CENTER" promptText="%enter_your_first_name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="200.0" right="200.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font></TextField>
       <TextField fx:id="idField" alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="60.0" left="200.0" right="200.0" />
@@ -52,13 +59,6 @@
          <GridPane.margin>
             <Insets bottom="30.0" />
          </GridPane.margin></Button>
-      <TextField fx:id="nameField" alignment="CENTER" promptText="%enter_your_first_name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-         <GridPane.margin>
-            <Insets left="200.0" right="200.0" />
-         </GridPane.margin>
-         <font>
-            <Font name="Roboto Light" size="12.0" />
-         </font></TextField>
       <Button fx:id="adminBtn" mnemonicParsing="false" onAction="#actionAdminBtn" text="Admin" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
@@ -84,5 +84,13 @@
             <Insets left="10.0" top="10.0" />
          </GridPane.margin>
       </HBox>
+      <Button id="home_button" fx:id="helpBtn" mnemonicParsing="false" onAction="#actionHelp" prefHeight="30.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
+         <graphic>
+            <ImageView fx:id="helpImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
    </children>
 </GridPane>

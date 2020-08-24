@@ -3,10 +3,10 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@/css/stylesheet.css" />
@@ -18,12 +18,12 @@
                 <TableColumn fx:id="colTeacherFirstName" prefWidth="100.0" text="%first_name" />
                 <TableColumn fx:id="colTeacherLastName" prefWidth="90.0" text="%last_name" />
                 <TableColumn fx:id="colTeacherPhone" prefWidth="100.0" text="%phone" />
-                <TableColumn fx:id="colClassSize" prefWidth="100" text="%class_size" />
+                <TableColumn fx:id="colClassSize" prefWidth="90.0" text="%class_size" />
             </columns>
         </TableView>
     </center>
     <right>
-        <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="200.0" prefWidth="140.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="hireTeacherBtn" mnemonicParsing="false" onAction="#actionHireTeacher" prefWidth="Infinity" text="%hire_a_teacher" textAlignment="CENTER" wrapText="true" />
                 <Button fx:id="fireTeacherBtn" mnemonicParsing="false" onAction="#actionFireTeacher" prefWidth="Infinity" text="%fire_teacher" textAlignment="CENTER" wrapText="true" />
@@ -35,7 +35,7 @@
                <font>
                   <Font size="11.0" />
                </font></Button>
-            <Button fx:id="viewReportBtn" layoutX="15.0" layoutY="195.0" mnemonicParsing="false" onAction="#actionViewReport" prefWidth="Infinity" text="%view_report_teacher" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="viewReportBtn" layoutX="15.0" layoutY="195.0" mnemonicParsing="false" onAction="#actionViewReport" prefWidth="Infinity" text="%view_report_teacher" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                <font>
                   <Font size="11.0" />
                </font>

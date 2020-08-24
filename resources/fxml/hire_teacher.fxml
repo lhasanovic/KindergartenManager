@@ -5,12 +5,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="5.0" prefWidth="345.0" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@/css/stylesheet.css" />
     </stylesheets>
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints percentWidth="50.0" />
         <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
@@ -22,7 +22,7 @@
       <RowConstraints />
     </rowConstraints>
     <children>
-        <Label text="%first_name" />
+        <Label prefWidth="100.0" text="%first_name" />
         <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
         <Label text="%last_name" GridPane.rowIndex="1" />
         <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />

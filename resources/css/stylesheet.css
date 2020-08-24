@@ -54,6 +54,10 @@
     -fx-background-radius: 200px;
 }
 
+#help_button {
+    -fx-background-radius: 200px;
+}
+
 #teacher_info {
     -fx-text-fill: white;
 }
