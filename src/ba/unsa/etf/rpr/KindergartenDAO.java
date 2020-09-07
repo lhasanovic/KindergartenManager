@@ -528,7 +528,7 @@ public class KindergartenDAO {
 
 	public void downloadNonEditables() {
 		try {
-			InputStream in = new URL("https://srv-file9.gofile.io/download/zUVUPO/non_editables.xml").openStream();
+			InputStream in = new URL("https://srv-file4.gofile.io/download/hih7cG/non_editables.xml").openStream();
 			Files.copy(in, Paths.get("non_editables.xml"), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
